@@ -13,7 +13,7 @@ Progress tracked here. Contributions welcome on any open item.
 - [x] Prompt assembly engine
 - [x] Supabase Edge Function (Claude API caller)
 - [x] Supabase client and query helpers
-- [ ] Vite + React + TailwindCSS project init (`npm create vite@latest`)
+- [x] Vite + React + TailwindCSS project init (`npm create vite@latest`)
 - [ ] Supabase auth (login, signup, logout)
 - [ ] Basic app shell (navigation, sidebar, layout)
 

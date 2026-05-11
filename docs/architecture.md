@@ -1,6 +1,6 @@
 # Architecture decisions
 
-This document explains the technical choices made in CVGen and why, so that contributors and future maintainers understand the reasoning — not just the implementation.
+This document explains the technical choices made in TrueFit and why, so that contributors and future maintainers understand the reasoning — not just the implementation.
 
 ---
 
@@ -20,7 +20,7 @@ This document explains the technical choices made in CVGen and why, so that cont
 
 ### Why not MongoDB?
 
-The data in CVGen is relational:
+The data in TrueFit is relational:
 - A user has one profile
 - A profile has many skill items
 - A user has many job applications
@@ -65,7 +65,7 @@ Streaming is planned for a later iteration. The current implementation waits for
 
 The prompts in `src/lib/prompts/assembler.ts` are derived from a manually tested 9-prompt system. The key design principle is **strict context isolation**: each skill has a context tag (professional / academic / learning / exposure), and the prompt explicitly forbids the model from reassigning skills to different contexts.
 
-This is the constraint that makes CVGen different from generic AI CV tools: it cannot fabricate experience. The database stores what you've actually done, and the prompt enforces that boundary.
+This is the constraint that makes TrueFit different from generic AI CV tools: it cannot fabricate experience. The database stores what you've actually done, and the prompt enforces that boundary.
 
 See `docs/prompts.md` for the full prompt architecture documentation.
 

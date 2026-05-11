@@ -1,6 +1,6 @@
-# Contributing to CVGen
+# Contributing to TrueFit
 
-Thanks for considering a contribution. CVGen is a personal/portfolio project open to collaboration.
+Thanks for considering a contribution. TrueFit is a personal/portfolio project open to collaboration.
 
 ---
 
@@ -36,7 +36,7 @@ Thanks for considering a contribution. CVGen is a personal/portfolio project ope
 
 ## The non-negotiable rule
 
-**CVGen must never fabricate experience.** Any change to the prompt system that could cause the AI to invent skills, inflate seniority, or reassign a skill to a context it doesn't belong to will be rejected. This is the core promise of the tool.
+**TrueFit must never fabricate experience.** Any change to the prompt system that could cause the AI to invent skills, inflate seniority, or reassign a skill to a context it doesn't belong to will be rejected. This is the core promise of the tool.
 
 ---
 

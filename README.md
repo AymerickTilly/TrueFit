@@ -1,8 +1,8 @@
-# CVGen — AI-Powered CV & Cover Letter Generator
+# TrueFit — AI-Powered CV & Cover Letter Generator
 
 **Tailored job applications in seconds, without lying.**
 
-CVGen takes your real skills, experience, and projects, and generates a tailored CV and cover letter for any job offer using Claude AI. It surfaces the most relevant parts of your background honestly — no fabricated skills, no inflated titles, no hallucinated experience.
+TrueFit takes your real skills, experience, and projects, and generates a tailored CV and cover letter for any job offer using Claude AI. It surfaces the most relevant parts of your background honestly — no fabricated skills, no inflated titles, no hallucinated experience.
 
 > Built by a junior developer for junior developers, but designed for anyone.
 
@@ -10,7 +10,7 @@ CVGen takes your real skills, experience, and projects, and generates a tailored
 
 ## Why this exists
 
-Most AI CV tools either rewrite your CV into generic corporate language or invent experience you don't have. CVGen works differently: you define your real skills inventory once, and the AI selects and frames the most relevant parts for each specific job — never adding what isn't there.
+Most AI CV tools either rewrite your CV into generic corporate language or invent experience you don't have. TrueFit works differently: you define your real skills inventory once, and the AI selects and frames the most relevant parts for each specific job — never adding what isn't there.
 
 ---
 
@@ -50,8 +50,8 @@ Most AI CV tools either rewrite your CV into generic corporate language or inven
 
 ```bash
 # Clone the repo
-git clone https://github.com/AymerickTilly/cv-gen.git
-cd cv-gen
+git clone https://github.com/AymerickTilly/truefit.git
+cd truefit
 
 # Install dependencies
 npm install
@@ -80,7 +80,7 @@ ANTHROPIC_API_KEY=your_anthropic_api_key   # server-side only, via Edge Function
 ## Project structure
 
 ```
-cv-gen/
+truefit/
 ├── docs/                  # Architecture decisions, prompt system docs, roadmap
 ├── src/
 │   ├── components/        # React UI components
@@ -108,7 +108,7 @@ cv-gen/
 
 ## How the AI integration works
 
-The core of CVGen is a prompt assembly system in `src/lib/prompts/`. When you generate a CV:
+The core of TrueFit is a prompt assembly system in `src/lib/prompts/`. When you generate a CV:
 
 1. Your full profile (skills, experience, projects) is loaded from Supabase
 2. The job offer text is analysed to extract requirements and gaps
