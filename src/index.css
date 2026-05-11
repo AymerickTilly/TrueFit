@@ -1,113 +1,72 @@
 @import "tailwindcss";
 
+/* ─── Raw CSS variables (light mode) ───────────────────────────
+   These are the actual values. They live here so dark mode can
+   override them in one place via a media query.
+──────────────────────────────────────────────────────────────── */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --bg:            #fafafa;   /* page background       */
+  --fg:            #09090b;   /* primary text          */
+  --card:          #ffffff;   /* card / surface bg     */
+  --card-fg:       #09090b;
+  --border:        #e4e4e7;   /* borders and dividers  */
+  --input:         #e4e4e7;   /* input borders         */
+  --primary:       #18181b;   /* primary action color  */
+  --primary-fg:    #fafafa;
+  --secondary:     #f4f4f5;   /* secondary action bg   */
+  --secondary-fg:  #18181b;
+  --muted:         #f4f4f5;   /* subtle backgrounds    */
+  --muted-fg:      #71717a;   /* subdued text          */
+  --ring:          #18181b;   /* focus ring            */
 }
 
+/* ─── Dark mode overrides ───────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --bg:            #09090b;
+    --fg:            #fafafa;
+    --card:          #18181b;
+    --card-fg:       #fafafa;
+    --border:        #27272a;
+    --input:         #27272a;
+    --primary:       #fafafa;
+    --primary-fg:    #09090b;
+    --secondary:     #27272a;
+    --secondary-fg:  #fafafa;
+    --muted:         #27272a;
+    --muted-fg:      #a1a1aa;
+    --ring:          #d4d4d8;
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* ─── Tailwind semantic utilities ───────────────────────────────
+   @theme inline maps the CSS variables above to Tailwind class
+   names (bg-background, text-foreground, border-border, etc.).
+   "inline" means Tailwind outputs var(--color-*) directly, so
+   the utilities automatically respond to the dark mode override
+   above without needing a dark: variant in every component.
+──────────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-background:          var(--bg);
+  --color-foreground:          var(--fg);
+  --color-card:                var(--card);
+  --color-card-foreground:     var(--card-fg);
+  --color-border:              var(--border);
+  --color-input:               var(--input);
+  --color-primary:             var(--primary);
+  --color-primary-foreground:  var(--primary-fg);
+  --color-secondary:           var(--secondary);
+  --color-secondary-foreground: var(--secondary-fg);
+  --color-muted:               var(--muted);
+  --color-muted-foreground:    var(--muted-fg);
+  --color-ring:                var(--ring);
 }
 
+/* ─── Base reset ─────────────────────────────────────────────── */
 body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
