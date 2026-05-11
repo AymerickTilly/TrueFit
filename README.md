@@ -1,8 +1,8 @@
-# TrueFit — AI-Powered CV & Cover Letter Generator
+# TrueFit: AI-Powered CV and Cover Letter Generator
 
 **Tailored job applications in seconds, without lying.**
 
-TrueFit takes your real skills, experience, and projects, and generates a tailored CV and cover letter for any job offer using Claude AI. It surfaces the most relevant parts of your background honestly — no fabricated skills, no inflated titles, no hallucinated experience.
+TrueFit takes your real skills, experience, and projects, and generates a tailored CV and cover letter for any job offer using Claude AI. It surfaces the most relevant parts of your background honestly. It never fabricates skills, inflates titles, or hallucinates experience.
 
 > Built by a junior developer for junior developers, but designed for anyone.
 
@@ -10,19 +10,19 @@ TrueFit takes your real skills, experience, and projects, and generates a tailor
 
 ## Why this exists
 
-Most AI CV tools either rewrite your CV into generic corporate language or invent experience you don't have. TrueFit works differently: you define your real skills inventory once, and the AI selects and frames the most relevant parts for each specific job — never adding what isn't there.
+Most AI CV tools either rewrite your CV into generic corporate language or invent experience you do not have. TrueFit works differently. You define your real skills inventory once, and the AI selects and frames the most relevant parts for each specific job without adding anything that is not already there.
 
 ---
 
 ## Features
 
-- **Skill inventory builder** — define skills with context (professional / academic / learning), usage descriptions, and groupings auto-suggested by AI
-- **Job offer analysis** — paste a job posting, get a structured breakdown of requirements and gaps
-- **CV generation** — tailored, honest CV based on your real experience
-- **Cover letter generation** — full letter or short text-box version
-- **Applications log** — track every job you applied to with the documents generated
-- **Multi-user support** — anyone can create a profile and use the tool
-- **Field-agnostic** — built for IT first, designed to work for any profession
+- **Skill inventory builder**: Define your skills with context tags (professional, academic, or learning), write usage descriptions, and get AI-suggested groupings.
+- **Job offer analysis**: Paste any job posting and receive a structured breakdown of requirements and skill gaps.
+- **CV generation**: Generate a tailored, honest CV based entirely on your real experience.
+- **Cover letter generation**: Generate either a full cover letter or a short text-box version.
+- **Applications log**: Track every job you have applied to, alongside the documents generated for each application.
+- **Multi-user support**: Anyone can create an account and build their own skill inventory.
+- **Field-agnostic**: Built for IT roles first, but designed to work for any profession.
 
 ---
 
@@ -31,7 +31,7 @@ Most AI CV tools either rewrite your CV into generic corporate language or inven
 | Layer | Technology |
 |---|---|
 | Frontend | React + TypeScript + Vite + TailwindCSS |
-| Database & Auth | Supabase (Postgres + Edge Functions) |
+| Database and Auth | Supabase (Postgres + Edge Functions) |
 | AI | Claude API (`claude-sonnet-4-20250514`) |
 | PDF export | react-pdf |
 | Hosting | Vercel (frontend) + Supabase (backend) |
@@ -43,15 +43,15 @@ Most AI CV tools either rewrite your CV into generic corporate language or inven
 ### Prerequisites
 
 - Node.js 18+
-- A [Supabase](https://supabase.com) account (free tier)
+- A [Supabase](https://supabase.com) account (free tier works fine)
 - An [Anthropic](https://console.anthropic.com) API key
 
 ### Installation
 
 ```bash
 # Clone the repo
-git clone https://github.com/AymerickTilly/truefit.git
-cd truefit
+git clone https://github.com/AymerickTilly/TrueFit.git
+cd TrueFit
 
 # Install dependencies
 npm install
@@ -72,7 +72,7 @@ npm run dev
 ```
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-ANTHROPIC_API_KEY=your_anthropic_api_key   # server-side only, via Edge Function
+ANTHROPIC_API_KEY=your_anthropic_api_key   # server-side only, lives in the Edge Function
 ```
 
 ---
@@ -80,7 +80,7 @@ ANTHROPIC_API_KEY=your_anthropic_api_key   # server-side only, via Edge Function
 ## Project structure
 
 ```
-truefit/
+TrueFit/
 ├── docs/                  # Architecture decisions, prompt system docs, roadmap
 ├── src/
 │   ├── components/        # React UI components
@@ -92,14 +92,14 @@ truefit/
 │   ├── pages/             # Route-level views
 │   ├── lib/
 │   │   ├── prompts/       # Prompt assembly logic (the core of the AI integration)
-│   │   ├── api/           # Supabase client, Claude API caller
+│   │   ├── api/           # Supabase client
 │   │   └── utils/         # Shared helpers
 │   ├── hooks/             # Custom React hooks
 │   └── types/             # TypeScript interfaces and types
 ├── supabase/
 │   ├── migrations/        # SQL schema (versioned, never edit directly)
 │   └── functions/
-│       └── generate-documents/  # Edge Function: calls Claude API server-side
+│       └── generate-documents/  # Edge Function that calls the Claude API server-side
 └── public/
     └── templates/         # CV layout templates
 ```
@@ -110,13 +110,13 @@ truefit/
 
 The core of TrueFit is a prompt assembly system in `src/lib/prompts/`. When you generate a CV:
 
-1. Your full profile (skills, experience, projects) is loaded from Supabase
-2. The job offer text is analysed to extract requirements and gaps
-3. A structured prompt is assembled, combining your profile with the job analysis
-4. This is sent to Claude via a Supabase Edge Function (keeping the API key server-side)
-5. Claude returns a tailored CV and cover letter, which are parsed and displayed
+1. Your full profile (skills, experience, projects) is loaded from Supabase.
+2. The job offer text is analysed to extract requirements and gaps.
+3. A structured prompt is assembled, combining your profile with the job analysis.
+4. The prompt is sent to Claude via a Supabase Edge Function, which keeps the API key server-side.
+5. Claude returns a tailored CV and cover letter, which are then parsed and displayed.
 
-The AI operates under strict constraints: it can only use skills you've defined, cannot reassign a skill to a context it doesn't belong to, and cannot inflate your experience. See `docs/prompts.md` for the full prompt architecture.
+The AI operates under strict constraints. It can only use skills you have defined, cannot reassign a skill to a context it does not belong to, and cannot inflate your experience. See `docs/prompts.md` for the full prompt architecture.
 
 ---
 
@@ -139,10 +139,10 @@ See [`docs/roadmap.md`](docs/roadmap.md) for the full plan. Short version:
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md). All contributions welcome — especially non-IT field prompt templates.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md). All contributions are welcome, especially non-IT field prompt templates.
 
 ---
 
 ## License
 
-MIT — use it, fork it, build on it.
+MIT. Use it, fork it, build on it.
