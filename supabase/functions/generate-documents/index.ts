@@ -1,13 +1,12 @@
-// Supabase Edge Function — calls the Gemini API server-side.
-// The GEMINI_API_KEY never leaves this function.
+// Supabase Edge Function — calls the Groq API server-side.
+// The GROQ_API_KEY never leaves this function.
 //
 // Deploy:    npx supabase functions deploy generate-documents
-// Secret:    npx supabase secrets set GEMINI_API_KEY=your_key
+// Secret:    npx supabase secrets set GROQ_API_KEY=your_key
 // Local dev: npx supabase functions serve generate-documents
 
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
-
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 const MAX_TOKENS = 4096
 
 const corsHeaders = {
@@ -20,15 +19,15 @@ interface PromptRequest {
   content: string
 }
 
-serve(async (req: Request) => {
+Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    const apiKey = Deno.env.get('GEMINI_API_KEY')
+    const apiKey = Deno.env.get('GROQ_API_KEY')
     if (!apiKey) {
-      throw new Error('GEMINI_API_KEY is not set in Edge Function secrets')
+      throw new Error('GROQ_API_KEY is not set in Edge Function secrets')
     }
 
     const body = await req.json()
@@ -43,34 +42,34 @@ serve(async (req: Request) => {
 
     const results = await Promise.all(
       prompts.map(async ({ type, content }) => {
-        const response = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+        const response = await fetch(GROQ_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+          },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: content }] }],
-            generationConfig: {
-              temperature: 0.3,
-              maxOutputTokens: MAX_TOKENS,
-            },
+            model: GROQ_MODEL,
+            messages: [{ role: 'user', content }],
+            temperature: 0.3,
+            max_tokens: MAX_TOKENS,
           }),
         })
 
         if (!response.ok) {
           const error = await response.text()
-          throw new Error(`Gemini API error for ${type}: ${error}`)
+          throw new Error(`Groq API error for ${type}: ${error}`)
         }
 
         const data = await response.json()
-        const outputText: string = data.candidates?.[0]?.content?.parts
-          ?.map((p: { text: string }) => p.text)
-          .join('') ?? ''
+        const outputText: string = data.choices?.[0]?.message?.content ?? ''
 
         return {
           type,
           content: outputText,
-          tokens_input:  data.usageMetadata?.promptTokenCount     ?? 0,
-          tokens_output: data.usageMetadata?.candidatesTokenCount ?? 0,
-          model_used: 'gemini-2.0-flash',
+          tokens_input:  data.usage?.prompt_tokens     ?? 0,
+          tokens_output: data.usage?.completion_tokens ?? 0,
+          model_used: GROQ_MODEL,
         }
       }),
     )

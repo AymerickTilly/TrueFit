@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/use-auth'
 import { Button, Spinner } from '@/components/ui'
 import { getProfileWithSkills } from '@/lib/api/profile'
 import { getApplications } from '@/lib/api/applications'
-import { generateCV } from '@/lib/api/generate'
+import { generateCV, type GenerateStep } from '@/lib/api/generate'
 import type { ProfileWithSkills, JobApplication } from '@/types'
 
 export default function GeneratePage() {
@@ -17,6 +17,7 @@ export default function GeneratePage() {
   const [selectedId, setSelectedId]     = useState<string>(searchParams.get('id') ?? '')
 
   const [generating, setGenerating] = useState(false)
+  const [step, setStep]             = useState<GenerateStep | null>(null)
   const [result, setResult]         = useState<string | null>(null)
   const [copied, setCopied]         = useState(false)
   const [error, setError]           = useState<string | null>(null)
@@ -41,9 +42,10 @@ export default function GeneratePage() {
     setResult(null)
     setGenerating(true)
 
-    const { data, error } = await generateCV(profile, selectedApp)
+    const { data, error } = await generateCV(profile, selectedApp, setStep)
 
     setGenerating(false)
+    setStep(null)
     if (error) { setError(error); return }
     setResult(data?.content ?? null)
   }
@@ -111,7 +113,7 @@ export default function GeneratePage() {
         disabled={!selectedApp || profileIncomplete || generating}
       >
         <Sparkles size={15} />
-        {generating ? 'Generating…' : 'Generate CV'}
+        {step === 'analyzing' ? 'Analysing job…' : step === 'generating' ? 'Generating CV…' : 'Generate CV'}
       </Button>
 
       {error && (
