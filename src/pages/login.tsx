@@ -33,11 +33,8 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-6">
 
-        <div>
+        <div className="flex justify-center">
           <Logo className="h-10 w-auto" aria-label="TrueFit" />
-          <p className="mt-3 text-sm text-muted-foreground">
-            Sign in to your account
-          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

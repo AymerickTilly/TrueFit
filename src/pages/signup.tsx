@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Input } from '@/components/ui'
+import Logo from '@/assets/logo.svg?react'
 
 export default function SignupPage() {
   const { signUp } = useAuth()
@@ -43,13 +44,9 @@ export default function SignupPage() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-6">
 
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            Create your account
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Start building your honest profile.
-          </p>
+        <div className="flex flex-col items-center gap-3">
+          <Logo className="h-10 w-auto" aria-label="TrueFit" />
+          <p className="text-sm text-muted-foreground">Create your account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
