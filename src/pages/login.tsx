@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Input } from '@/components/ui'
-import logoUrl from '@/assets/logo.svg'
+import Logo from '@/assets/logo.svg?react'
 
 export default function LoginPage() {
   const { signIn } = useAuth()
@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-6">
 
         <div>
-          <img src={logoUrl} alt="TrueFit" className="h-10" />
+          <Logo className="h-10 w-auto" aria-label="TrueFit" />
           <p className="mt-3 text-sm text-muted-foreground">
             Sign in to your account
           </p>
