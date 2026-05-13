@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui'
+import logoUrl from '@/assets/logo.svg'
 
 export default function DashboardPage() {
   const { user, signOut } = useAuth()
@@ -15,7 +16,7 @@ export default function DashboardPage() {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="border-b border-border px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <span className="text-sm font-semibold">TrueFit</span>
+          <img src={logoUrl} alt="TrueFit" className="h-7" />
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground">{user?.email}</span>
             <Button variant="ghost" size="sm" onClick={handleSignOut}>

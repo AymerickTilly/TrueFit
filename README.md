@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/AymerickTilly/TrueFit/main/src/assets/logo.svg" alt="TrueFit" height="60" />
+
 # TrueFit: AI-Powered CV and Cover Letter Generator
 
 **Tailored job applications in seconds, without lying.**

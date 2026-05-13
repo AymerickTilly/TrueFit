@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Input } from '@/components/ui'
+import logoUrl from '@/assets/logo.svg'
 
 export default function LoginPage() {
   const { signIn } = useAuth()
@@ -33,10 +34,8 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-6">
 
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            TrueFit
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <img src={logoUrl} alt="TrueFit" className="h-10" />
+          <p className="mt-3 text-sm text-muted-foreground">
             Sign in to your account
           </p>
         </div>
