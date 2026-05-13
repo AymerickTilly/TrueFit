@@ -3,6 +3,8 @@ import { useProfile } from '@/hooks/use-profile'
 import { PersonalInfoForm } from '@/components/profile/personal-info-form'
 import { SkillsSection } from '@/components/profile/skills-section'
 import { ExperienceSection } from '@/components/profile/experience-section'
+import { EducationSection } from '@/components/profile/education-section'
+import { ProjectSection } from '@/components/profile/project-section'
 import { Spinner } from '@/components/ui'
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -53,11 +55,17 @@ export default function ProfilePage() {
       </Section>
 
       <Section title="Education">
-        <p className="text-sm text-muted-foreground">Coming next.</p>
+        <EducationSection
+          education={profile?.education ?? []}
+          onSave={save}
+        />
       </Section>
 
       <Section title="Projects">
-        <p className="text-sm text-muted-foreground">Coming next.</p>
+        <ProjectSection
+          projects={profile?.projects ?? []}
+          onSave={save}
+        />
       </Section>
     </div>
   )
