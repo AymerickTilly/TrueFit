@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/api/supabase'
-import type { Profile } from '@/types'
+import type { Profile, ProfileWithSkills } from '@/types'
+import { getSkills } from '@/lib/api/skills'
 
 export async function getProfile(userId: string): Promise<Profile | null> {
   const { data, error } = await supabase
@@ -10,6 +11,13 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 
   if (error) return null
   return data as Profile
+}
+
+export async function getProfileWithSkills(userId: string): Promise<ProfileWithSkills | null> {
+  const profile = await getProfile(userId)
+  if (!profile) return null
+  const skill_items = await getSkills(profile.id)
+  return { ...profile, skill_items }
 }
 
 export async function upsertProfile(

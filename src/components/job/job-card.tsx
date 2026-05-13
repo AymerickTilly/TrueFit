@@ -1,4 +1,5 @@
 import { Trash2, FileText } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Badge } from '@/components/ui'
 import type { JobApplication, ApplicationStatus } from '@/types'
 
@@ -31,13 +32,13 @@ export function JobCard({ application, onDelete, onStatusChange }: JobCardProps)
           <p className="text-xs text-muted-foreground">{application.company_name} · Added {date}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <button
-            disabled
-            title="Generate CV — coming soon"
-            className="text-muted-foreground opacity-40 cursor-not-allowed"
+          <Link
+            to={`/generate?id=${application.id}`}
+            title="Generate CV"
+            className="text-muted-foreground hover:text-foreground transition-colors"
           >
             <FileText size={14} />
-          </button>
+          </Link>
           <button
             onClick={() => onDelete(application.id)}
             className="text-muted-foreground hover:text-red-500 transition-colors"
