@@ -1,6 +1,7 @@
 import { useAuth } from '@/hooks/use-auth'
 import { useProfile } from '@/hooks/use-profile'
 import { PersonalInfoForm } from '@/components/profile/personal-info-form'
+import { SkillsSection } from '@/components/profile/skills-section'
 import { Spinner } from '@/components/ui'
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -40,7 +41,7 @@ export default function ProfilePage() {
       </Section>
 
       <Section title="Skills">
-        <p className="text-sm text-muted-foreground">Coming next.</p>
+        <SkillsSection profileId={profile?.id} />
       </Section>
 
       <Section title="Work experience">

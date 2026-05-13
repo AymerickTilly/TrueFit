@@ -20,10 +20,8 @@ export function useProfile() {
     updates: Partial<Omit<Profile, 'id' | 'user_id' | 'created_at' | 'updated_at'>>,
   ): Promise<{ error: string | null }> {
     if (!user) return { error: 'Not authenticated' }
-    const { error } = await upsertProfile(user.id, updates)
-    if (!error) {
-      setProfile(prev => (prev ? { ...prev, ...updates } : null))
-    }
+    const { data, error } = await upsertProfile(user.id, updates)
+    if (!error && data) setProfile(data)
     return { error }
   }
 

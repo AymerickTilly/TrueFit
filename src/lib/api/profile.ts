@@ -15,10 +15,12 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 export async function upsertProfile(
   userId: string,
   updates: Partial<Omit<Profile, 'id' | 'user_id' | 'created_at' | 'updated_at'>>,
-): Promise<{ error: string | null }> {
-  const { error } = await supabase
+): Promise<{ data: Profile | null; error: string | null }> {
+  const { data, error } = await supabase
     .from('profiles')
     .upsert({ ...updates, user_id: userId }, { onConflict: 'user_id' })
+    .select()
+    .single()
 
-  return { error: error?.message ?? null }
+  return { data: data as Profile | null, error: error?.message ?? null }
 }
