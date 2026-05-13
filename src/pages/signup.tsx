@@ -2,7 +2,6 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Input } from '@/components/ui'
-import logoUrl from '@/assets/logo.svg'
 
 export default function SignupPage() {
   const { signUp } = useAuth()
@@ -45,9 +44,11 @@ export default function SignupPage() {
       <div className="w-full max-w-sm space-y-6">
 
         <div>
-          <img src={logoUrl} alt="TrueFit" className="h-10" />
-          <p className="mt-3 text-sm text-muted-foreground">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
             Create your account
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Start building your honest profile.
           </p>
         </div>
 
