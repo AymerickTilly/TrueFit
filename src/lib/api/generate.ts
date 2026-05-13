@@ -42,11 +42,16 @@ export async function generateCV(
   if (analysisError) return { data: null, error: analysisError }
 
   let analysis: GapAnalysis = {
-    direct_matches:   [],
-    partial_matches:  [],
-    missing_required: [],
-    preferred_matches: [],
-    role_themes:      [],
+    direct_matches:      [],
+    partial_matches:     [],
+    missing_required:    [],
+    preferred_matches:   [],
+    role_themes:         [],
+    key_responsibilities: [],
+    company_focus:       '',
+    what_matters_most:   '',
+    tone_signal:         'technical/precise',
+    soft_skills_valued:  [],
   }
   try {
     analysis = JSON.parse(analysisDoc!.content) as GapAnalysis

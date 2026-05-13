@@ -13,6 +13,11 @@ export interface GapAnalysis {
   missing_required: string[]
   preferred_matches: string[]
   role_themes: string[]
+  key_responsibilities: string[]
+  company_focus: string
+  what_matters_most: string
+  tone_signal: string
+  soft_skills_valued: string[]
 }
 
 function formatSkillsInventory(skills: ProfileWithSkills['skill_items']): string {
@@ -101,17 +106,25 @@ JOB POSTING — ${application.role_title} at ${application.company_name}:
 ${application.job_ad_text}
 
 TASK:
-Extract all required and preferred technical skills from the job posting.
-For each required skill, compare against the candidate inventory and classify:
+Read the job posting carefully. Extract the following and return as a single JSON object.
+
+Skill matching — compare each required skill against the candidate inventory:
 - direct_matches: candidate has this skill at [professional] level
-- partial_matches: candidate has a related or adjacent skill, or has the skill at [academic] or [exposure] level only. Include a "bridge" explaining the connection.
-- missing_required: skill is genuinely absent from the candidate profile
+- partial_matches: candidate has a related or adjacent skill, or the skill at [academic]/[exposure] level. Include a "bridge" explaining the connection.
+- missing_required: skill genuinely absent from the candidate profile
 - preferred_matches: preferred/nice-to-have skills the candidate has at any level
-- role_themes: 3-5 recurring themes from the job posting (e.g. "automation", "backend development", "data pipelines")
+
+Job context — read beyond the skills list:
+- role_themes: 3-5 recurring technical themes (e.g. "automation", "data pipelines", "system reliability")
+- key_responsibilities: the 3-4 main things this person will actually do day-to-day
+- company_focus: one sentence — what does this company or team care about most (e.g. "delivering reliable data infrastructure for fintech clients", "shipping fast in a startup environment")
+- what_matters_most: the single most important thing the hiring manager is looking for beyond a skill list (e.g. "production reliability mindset", "ability to work independently", "clean code in a team setting")
+- tone_signal: the register of this role — one of: "formal/enterprise", "technical/precise", "collaborative/startup", "academic/research"
+- soft_skills_valued: 2-4 soft skills or behaviours explicitly or implicitly valued in the posting
 
 Return ONLY a valid JSON object. No markdown fences, no preamble, no explanation.
 
-{"direct_matches":[],"partial_matches":[{"skill":"","bridge":""}],"missing_required":[],"preferred_matches":[],"role_themes":[]}`
+{"direct_matches":[],"partial_matches":[{"skill":"","bridge":""}],"missing_required":[],"preferred_matches":[],"role_themes":[],"key_responsibilities":[],"company_focus":"","what_matters_most":"","tone_signal":"","soft_skills_valued":[]}`
 }
 
 // ============================================================
@@ -125,15 +138,18 @@ export function assembleGenerationPrompt(
   application: JobApplication,
   analysis: GapAnalysis,
 ): string {
-  const directList  = analysis.direct_matches.join(', ')                                               || 'none identified'
-  const partialList = analysis.partial_matches.map(p => `${p.skill} (bridge: ${p.bridge})`).join(', ') || 'none'
-  const missingList = analysis.missing_required.join(', ')                                             || 'none'
-  const themeList   = analysis.role_themes.join(', ')                                                  || 'not identified'
+  const directList   = analysis.direct_matches.join(', ')                                               || 'none identified'
+  const partialList  = analysis.partial_matches.map(p => `${p.skill} (bridge: ${p.bridge})`).join(', ') || 'none'
+  const missingList  = analysis.missing_required.join(', ')                                             || 'none'
+  const themeList    = analysis.role_themes.join(', ')                                                  || 'not identified'
+  const respList     = analysis.key_responsibilities.join('; ')                                        || 'not specified'
+  const softList     = analysis.soft_skills_valued.join(', ')                                          || 'not specified'
 
   const hasVolunteering = profile.volunteering && profile.volunteering.length > 0
   const hasInterests    = profile.interests && profile.interests.length > 0
 
   return `You are an expert CV writer. Generate a complete, tailored, honest CV.
+Writing tone for this role is: ${analysis.tone_signal || 'technical/precise'}. Calibrate confidence level, sentence density, and vocabulary to match — "formal/enterprise" is measured and precise, "collaborative/startup" is direct and energetic, "academic/research" is methodical, "technical/precise" is concrete and tool-specific.
 
 === ABSOLUTE RULES — NEVER VIOLATE ===
 1. Never invent, fabricate, or infer any skill, experience, or qualification not listed in the profile below.
@@ -153,6 +169,11 @@ Direct matches (candidate has professionally): ${directList}
 Partial matches (academic or adjacent): ${partialList}
 Missing required skills: ${missingList}
 Role themes: ${themeList}
+Key responsibilities (what this person will actually do): ${respList}
+Company/team focus: ${analysis.company_focus || 'not identified'}
+What matters most to the hiring manager: ${analysis.what_matters_most || 'not identified'}
+Soft skills valued: ${softList}
+Writing tone for this role: ${analysis.tone_signal || 'technical/precise'}
 
 === CANDIDATE PROFILE ===
 Name: ${profile.full_name || 'Not provided'}
@@ -177,25 +198,53 @@ ${formatProjects(profile.projects)}
 ${hasVolunteering ? `VOLUNTEERING:\n${formatVolunteering(profile.volunteering)}` : ''}
 ${hasInterests    ? `INTERESTS:\n${formatInterests(profile.interests)}`           : ''}
 
+=== WRITING QUALITY REFERENCE ===
+Your output must match the quality and style of these examples exactly. Study the phrasing, density, and structure before writing.
+
+Professional Statement example:
+"I'm a Master of Computer and Information Sciences based in Auckland, applying for the Junior DevOps Engineer position at Datacom. I bring professional experience as a Junior System and Database Administrator, where I deployed and maintained Linux/CentOS servers, automated operational workflows using Bash and Ansible, and managed SQL databases in production environments. I also have academic experience with React and TypeScript, built through a full-stack cloud-based e-commerce platform. I'm motivated to contribute to Datacom by applying my automation background to support reliable, production-grade delivery pipelines."
+
+Transferable Skills examples (study the format — no "I", bridge language mandatory):
+"• Production accuracy: banking databases where errors had real downstream consequences built a zero-tolerance approach to data quality, which transfers directly into validation and integrity work.
+• Debugging mindset: tracing failures across live servers, data layers, and scheduled workflows builds the same systematic approach needed to isolate and fix pipeline or application issues quickly.
+• Cross-stack context: working at the infrastructure layer gives a practical understanding of what sits below the application, which makes collaborating with developers and understanding system-wide consequences more intuitive."
+
+Technical Skills cluster examples (skill-first, context included):
+"• Automation (Ansible, Bash, cron): used professionally to automate Linux server and database deployments and schedule operational banking workflows, reducing manual intervention and error risk across recurring tasks.
+• SQL (MySQL, PostgreSQL): managed and queried production databases at the Bank of French Polynesia, maintaining data integrity and reliable access; also applied academically in data analysis projects."
+
+Work Experience bullet examples (active verb, concrete action, light outcome):
+"• Automated deployments and operational workflows using Bash, Ansible, and cron, reducing manual intervention across recurring tasks and minimising human error risk in production.
+• Managed and queried SQL databases (MySQL/PostgreSQL), maintaining data accuracy, integrity, and availability for ongoing operations and downstream processing.
+• Collaborated with infrastructure and data teams across incidents, translating findings between technical and non-technical stakeholders to keep resolution moving."
+
 === SECTION-BY-SECTION RULES ===
 
 PROFESSIONAL STATEMENT (first section after the header):
 - 3-4 sentences. First person. Under 95 words total.
-- Sentence 1: "I'm a [highest degree + field] based in [location], applying for the [role] position at [company]."
-- Sentence 2: Professional experience sentence — what they did professionally, which tools they used, what environment. Draw only from work experience. Do not add skills not in the profile.
-- Sentence 3: Academic/technical match — 1-3 academic skills that best match the role requirements. Frame explicitly as academic or project-based.
+- Sentence 1: "I'm a [MOST RECENT / HIGHEST degree + field] based in [location], applying for the [role] position at [company]." Use the most recent degree from the education list, not the oldest.
+- Sentence 2: Professional experience sentence — what they did professionally, which tools they used, what environment. Draw ONLY from work experience. Use the actual job titles and tools listed. Do not add skills not in the profile.
+- Sentence 3: Academic/technical match — 1-3 academic skills that best match the role requirements. Name the actual project. Frame explicitly as academic or project-based.
   If a skill was used both professionally and academically, say so clearly: "I have both professional and academic experience with [skill]."
-- Sentence 4: Motivation — "I'm motivated to contribute to [company] by [specific contribution tied to role themes]."
+- Sentence 4: Motivation — "I'm motivated to contribute to [company] by [specific contribution tied to the company focus: '${analysis.company_focus || 'role themes'}'. Connect what the candidate brings professionally or academically to that specific company/team mission. Not generic phrases like 'managing data with attention to detail'.]"
 - No filler, no corporate language, no em-dashes.
 
 TRANSFERABLE SKILLS (second section):
 Generate exactly 4 bullet points that bridge the candidate's past experience to the value they bring to this specific role.
-- For each bullet, first assess relevance to the role: HIGH (directly supports a required/preferred skill), MEDIUM (supports role themes), LOW (no connection). Select 4 bullets ranked HIGH first, then MEDIUM. Never include LOW bullets.
+- What matters most to the hiring manager: "${analysis.what_matters_most || 'not identified'}". At least one bullet must directly address this.
+- Soft skills valued in this role: ${softList}. Where supported by the candidate's actual experience, incorporate these into your bullet selection.
+- For each bullet, first assess relevance to the role: HIGH (directly supports a required/preferred skill or the what_matters_most signal), MEDIUM (supports role themes or valued soft skills), LOW (no connection). Select 4 bullets ranked HIGH first, then MEDIUM. Never include LOW bullets.
 - Derive the transferable skills from the candidate's actual work experience, environment, and background. Do not invent.
 - Possible angles: systems-level thinking, production accuracy standards, cross-stack context, self-directed learning, cross-functional communication, data quality mindset, etc. Select only what is genuinely supported by the profile.
 - Each bullet format: "• Skill name: one sentence connecting past experience to future role value."
+- CRITICAL FORMAT RULES for transferable skills bullets:
+  - Do NOT start with "I" — these are not first-person statements
+  - Do NOT use phrases like "I can bring value", "I can apply", "I can facilitate"
+  - Each bullet describes a QUALITY or CAPABILITY and then connects it to the role
+  - Correct: "Production accuracy: banking databases where errors had real downstream consequences built a zero-tolerance approach to data quality, which transfers directly into validation and integrity work."
+  - Wrong: "Automation expertise: I can bring value to the role by applying my experience in automating workflows."
 - Each bullet must be ONE sentence only. No em-dashes. Bridge language is mandatory in every bullet.
-- Vary sentence openings across all 4 bullets.
+- Vary sentence openings and structure across all 4 bullets.
 - Do NOT restate tools or tasks that will already appear in the Technical Skills or Work Experience sections.
 
 TECHNICAL SKILLS (third section):
@@ -203,15 +252,17 @@ TECHNICAL SKILLS (third section):
 - Lead with subsections containing direct match skills.
 - Within each subsection, group tools into capability clusters.
 - Cluster format: "Cluster label (tools): description and context."
-- [professional] skills: state confidently.
-- [academic] skills: frame as "academic" or "project-based".
-- [exposure] skills: "coursework familiarity" or "academic exposure" only.
+- ALWAYS include ALL skills marked [professional] — professional experience is never omitted regardless of job match.
+- [professional] skills: state confidently, no hedging.
+- [academic] skills: frame as "academic" or "project-based". Include only if they match the role.
+- [exposure] skills: "coursework familiarity" or "academic exposure" only. Include only if directly relevant.
 - [learning] skills: append as a short clause on the most relevant cluster only. Never standalone.
 - No skill not present in the inventory above.
 - 3-4 bullets per subsection maximum.
 
 WORK EXPERIENCE (fourth section):
 - Most recent role first. 3-5 bullets per role.
+- Key responsibilities for this role: ${respList}. Prioritise bullets that speak to these responsibilities over generic task descriptions.
 - Put bullets with direct match skills first within each role.
 - Active verbs and concrete actions.
 - Where a bullet describes only a task with no outcome, add a light consequence clause without inventing numbers.
