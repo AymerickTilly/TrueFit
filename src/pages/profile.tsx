@@ -2,6 +2,7 @@ import { useAuth } from '@/hooks/use-auth'
 import { useProfile } from '@/hooks/use-profile'
 import { PersonalInfoForm } from '@/components/profile/personal-info-form'
 import { SkillsSection } from '@/components/profile/skills-section'
+import { ExperienceSection } from '@/components/profile/experience-section'
 import { Spinner } from '@/components/ui'
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -45,7 +46,10 @@ export default function ProfilePage() {
       </Section>
 
       <Section title="Work experience">
-        <p className="text-sm text-muted-foreground">Coming next.</p>
+        <ExperienceSection
+          experience={profile?.work_experience ?? []}
+          onSave={save}
+        />
       </Section>
 
       <Section title="Education">
