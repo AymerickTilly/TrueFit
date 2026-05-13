@@ -2,7 +2,6 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Input } from '@/components/ui'
-import Logo from '@/assets/logo.svg?react'
 
 export default function LoginPage() {
   const { signIn } = useAuth()
@@ -32,10 +31,6 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-6">
-
-        <div className="flex justify-center">
-          <Logo className="h-10 w-auto" aria-label="TrueFit" />
-        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
