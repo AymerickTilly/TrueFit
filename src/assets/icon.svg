@@ -1,0 +1,21 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>TrueFit icon</title>
+  <desc>TrueFit document icon with blue fitted corner</desc>
+
+  <!-- Document body -->
+  <rect x="6" y="2" width="52" height="62" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+
+  <!-- Top-right fold -->
+  <polygon points="42,2 58,2 58,18 42,18" fill="#e2e8f0"/>
+  <polygon points="42,2 58,18 42,18" fill="#cbd5e1"/>
+
+  <!-- Document lines -->
+  <line x1="14" y1="28" x2="50" y2="28" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="14" y1="37" x2="50" y2="37" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="14" y1="46" x2="38" y2="46" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Tucked bottom-right corner -->
+  <polygon points="34,64 58,44 58,64" fill="#2563eb" opacity="0.12"/>
+  <polygon points="34,64 58,64 46,52" fill="#2563eb"/>
+  <line x1="34" y1="64" x2="46" y2="52" stroke="#1d4ed8" stroke-width="1" stroke-linecap="round"/>
+</svg>
