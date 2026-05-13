@@ -5,6 +5,8 @@ import { SkillsSection } from '@/components/profile/skills-section'
 import { ExperienceSection } from '@/components/profile/experience-section'
 import { EducationSection } from '@/components/profile/education-section'
 import { ProjectSection } from '@/components/profile/project-section'
+import { VolunteeringSection } from '@/components/profile/volunteering-section'
+import { InterestsSection } from '@/components/profile/interests-section'
 import { Spinner } from '@/components/ui'
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -64,6 +66,20 @@ export default function ProfilePage() {
       <Section title="Projects">
         <ProjectSection
           projects={profile?.projects ?? []}
+          onSave={save}
+        />
+      </Section>
+
+      <Section title="Volunteering">
+        <VolunteeringSection
+          volunteering={profile?.volunteering ?? []}
+          onSave={save}
+        />
+      </Section>
+
+      <Section title="Interests">
+        <InterestsSection
+          interests={profile?.interests ?? []}
           onSave={save}
         />
       </Section>

@@ -15,6 +15,7 @@ interface FormState {
   linkedin_url: string
   github_url: string
   professional_statement: string
+  personal_attributes: string
 }
 
 function fromProfile(profile: Profile | null): FormState {
@@ -26,6 +27,7 @@ function fromProfile(profile: Profile | null): FormState {
     linkedin_url:           profile?.linkedin_url ?? '',
     github_url:             profile?.github_url ?? '',
     professional_statement: profile?.professional_statement ?? '',
+    personal_attributes:    profile?.personal_attributes ?? '',
   }
 }
 
@@ -83,6 +85,21 @@ export function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
           placeholder="e.g. Junior dev, mostly backend, comfortable with Python and REST APIs. I like small teams where I can see the product impact."
           className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
           {...field('professional_statement')}
+        />
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-foreground">
+          Personal attributes
+        </label>
+        <p className="text-xs text-muted-foreground">
+          Used verbatim in cover letters as a personal paragraph. Write in first person — who you are outside of work and what it says about how you work.
+        </p>
+        <textarea
+          rows={4}
+          placeholder="e.g. I bring a disciplined mindset to my work, something I also apply in my personal life. Consistent strength training keeps me focused, surfing keeps me balanced, and time with friends and family keeps me grounded."
+          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
+          {...field('personal_attributes')}
         />
       </div>
 

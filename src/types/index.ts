@@ -94,6 +94,7 @@ export interface Profile {
   linkedin_url: string
   github_url: string
   professional_statement: string
+  personal_attributes: string
   work_experience: WorkExperience[]
   education: Education[]
   projects: Project[]
