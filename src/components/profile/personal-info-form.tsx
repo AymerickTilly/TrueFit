@@ -75,9 +75,12 @@ export function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
         <label className="text-sm font-medium text-foreground">
           Professional statement
         </label>
+        <p className="text-xs text-muted-foreground">
+          Write naturally — keywords, a rough paragraph, or both. The AI uses this as context and will never copy it word for word.
+        </p>
         <textarea
           rows={4}
-          placeholder="A short paragraph describing who you are professionally. Used as fallback context by the AI."
+          placeholder="e.g. Junior dev, mostly backend, comfortable with Python and REST APIs. I like small teams where I can see the product impact."
           className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
           {...field('professional_statement')}
         />
