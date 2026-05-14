@@ -238,11 +238,13 @@ Generate exactly 4 bullet points that bridge the candidate's past experience to 
 - Possible angles: systems-level thinking, production accuracy standards, cross-stack context, self-directed learning, cross-functional communication, data quality mindset, etc. Select only what is genuinely supported by the profile.
 - Each bullet format: "• Skill name: one sentence connecting past experience to future role value."
 - CRITICAL FORMAT RULES for transferable skills bullets:
-  - Do NOT start with "I" — these are not first-person statements
-  - Do NOT use phrases like "I can bring value", "I can apply", "I can facilitate"
-  - Each bullet describes a QUALITY or CAPABILITY and then connects it to the role
+  - Do NOT use first person at all — no "I", "me", "my", "has taught me", "will help me"
+  - Do NOT use future tense — no "will help", "can be applied", "I can apply", "I can facilitate"
+  - Each bullet describes a QUALITY or CAPABILITY built from past experience, then bridges it to the role. Past tense or present tense only.
   - Correct: "Production accuracy: banking databases where errors had real downstream consequences built a zero-tolerance approach to data quality, which transfers directly into validation and integrity work."
+  - Correct: "Systematic approach: decomposing recurring deployment failures into isolated causes builds the same fault-isolation discipline needed to track discrepancies across large data sets."
   - Wrong: "Automation expertise: I can bring value to the role by applying my experience in automating workflows."
+  - Wrong: "Systematic approach: experience with automated deployments has taught me to break down complex tasks, which will help in reviewing large volumes of records."
 - Each bullet must be ONE sentence only. No em-dashes. Bridge language is mandatory in every bullet.
 - Vary sentence openings and structure across all 4 bullets.
 - Do NOT restate tools or tasks that will already appear in the Technical Skills or Work Experience sections.
@@ -271,7 +273,7 @@ WORK EXPERIENCE (fourth section):
 
 EDUCATION (fifth section):
 - Most recent degree first.
-- For each degree: degree name, institution, date range.
+- For each degree: FULL degree name (e.g. "Master of Computer and Information Sciences", not "Master"), institution, date range. Never abbreviate the degree name.
 - Specialisation on a separate bullet if present.
 - Projects: embed relevant academic projects directly under the degree they belong to, under a "Projects:" label.
   Lead project: maximum 3 bullets. Frame as demonstrated capability, not narration.
