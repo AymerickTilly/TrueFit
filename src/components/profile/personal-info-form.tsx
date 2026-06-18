@@ -67,8 +67,8 @@ export function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
       <div className="grid grid-cols-2 gap-4">
         <Input label="Full name"  placeholder="Jane Smith"            required {...field('full_name')} />
         <Input label="Email"      placeholder="jane@example.com"      required type="email" {...field('email')} />
-        <Input label="Phone"      placeholder="+33 6 00 00 00 00"     {...field('phone')} />
-        <Input label="Location"   placeholder="Paris, France"         {...field('location')} />
+        <Input label="Phone"      placeholder="+64 21 000 0000"          {...field('phone')} />
+        <Input label="Location"   placeholder="Auckland, New Zealand"   {...field('location')} />
         <Input label="LinkedIn"   placeholder="https://linkedin.com/in/yourname" {...field('linkedin_url')} />
         <Input label="GitHub"     placeholder="https://github.com/yourname"      {...field('github_url')} />
       </div>
