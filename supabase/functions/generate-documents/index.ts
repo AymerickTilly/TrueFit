@@ -1,12 +1,12 @@
-// Supabase Edge Function — calls the xAI (Grok) API server-side.
-// The XAI_API_KEY never leaves this function.
+// Supabase Edge Function — calls the Groq API server-side.
+// The GROQ_API_KEY never leaves this function.
 //
 // Deploy:    npx supabase functions deploy generate-documents
-// Secret:    npx supabase secrets set XAI_API_KEY=your_key
+// Secret:    npx supabase secrets set GROQ_API_KEY=your_key
 // Local dev: npx supabase functions serve generate-documents
 
-const XAI_URL   = 'https://api.x.ai/v1/chat/completions'
-const XAI_MODEL = 'grok-3'
+const XAI_URL   = 'https://api.groq.com/openai/v1/chat/completions'
+const XAI_MODEL = 'llama-3.3-70b-versatile'
 
 const MAX_TOKENS: Record<string, number> = {
   analysis: 1024,
@@ -31,9 +31,9 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const apiKey = Deno.env.get('XAI_API_KEY')
+    const apiKey = Deno.env.get('GROQ_API_KEY')
     if (!apiKey) {
-      throw new Error('XAI_API_KEY is not set in Edge Function secrets')
+      throw new Error('GROQ_API_KEY is not set in Edge Function secrets')
     }
 
     const body = await req.json()
@@ -64,7 +64,7 @@ Deno.serve(async (req: Request) => {
 
         if (!response.ok) {
           const error = await response.text()
-          throw new Error(`xAI API error for ${type}: ${error}`)
+          throw new Error(`Groq API error for ${type}: ${error}`)
         }
 
         const data = await response.json()
