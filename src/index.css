@@ -1,72 +1,82 @@
 @import "tailwindcss";
 
-/* ─── Raw CSS variables (light mode) ───────────────────────────
-   These are the actual values. They live here so dark mode can
-   override them in one place via a media query.
+/* ─── Design tokens: Professional Blue + White ──────────────────
+   Palette informed by UI/UX Pro Max SaaS + Recruitment guidelines:
+   Trust blue primary, clean white surfaces, blue-tinted borders,
+   fast 150-200ms transitions, no decorative shadows or gradients.
 ──────────────────────────────────────────────────────────────── */
 :root {
-  --bg:            #fafafa;   /* page background       */
-  --fg:            #09090b;   /* primary text          */
-  --card:          #ffffff;   /* card / surface bg     */
-  --card-fg:       #09090b;
-  --border:        #e4e4e7;   /* borders and dividers  */
-  --input:         #e4e4e7;   /* input borders         */
-  --primary:       #18181b;   /* primary action color  */
-  --primary-fg:    #fafafa;
-  --secondary:     #f4f4f5;   /* secondary action bg   */
-  --secondary-fg:  #18181b;
-  --muted:         #f4f4f5;   /* subtle backgrounds    */
-  --muted-fg:      #71717a;   /* subdued text          */
-  --ring:          #18181b;   /* focus ring            */
+  --bg:            #f0f6ff;   /* page background — faint blue-white  */
+  --fg:            #0f172a;   /* primary text — near-black navy      */
+  --card:          #ffffff;   /* card / surface bg — pure white      */
+  --card-fg:       #0f172a;
+  --border:        #bfdbfe;   /* blue-200 — subtle blue borders      */
+  --input:         #bfdbfe;   /* input borders                       */
+  --primary:       #2563eb;   /* blue-600 — trust blue               */
+  --primary-fg:    #ffffff;
+  --secondary:     #eff6ff;   /* blue-50 — soft secondary bg         */
+  --secondary-fg:  #1e40af;   /* blue-800                            */
+  --muted:         #eff6ff;   /* blue-50 — subtle backgrounds        */
+  --muted-fg:      #64748b;   /* slate-500 — subdued text            */
+  --ring:          #2563eb;   /* focus ring matches primary          */
+  --success:       #16a34a;   /* green-600 — status badges           */
+  --success-bg:    #dcfce7;   /* green-100                           */
 }
 
-/* ─── Dark mode overrides ───────────────────────────────────── */
+/* ─── Dark mode ─────────────────────────────────────────────────
+   Same blue accent on dark navy — trust blue stays visible.
+──────────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg:            #09090b;
-    --fg:            #fafafa;
-    --card:          #18181b;
-    --card-fg:       #fafafa;
-    --border:        #27272a;
-    --input:         #27272a;
-    --primary:       #fafafa;
-    --primary-fg:    #09090b;
-    --secondary:     #27272a;
-    --secondary-fg:  #fafafa;
-    --muted:         #27272a;
-    --muted-fg:      #a1a1aa;
-    --ring:          #d4d4d8;
+    --bg:            #0b1120;   /* deep navy background               */
+    --fg:            #f0f6ff;
+    --card:          #111827;   /* gray-900                           */
+    --card-fg:       #f0f6ff;
+    --border:        #1e3a5f;   /* dark blue border                   */
+    --input:         #1e3a5f;
+    --primary:       #3b82f6;   /* blue-500 — slightly lighter on dark */
+    --primary-fg:    #ffffff;
+    --secondary:     #1e2d40;
+    --secondary-fg:  #93c5fd;   /* blue-300                           */
+    --muted:         #1e2d40;
+    --muted-fg:      #94a3b8;   /* slate-400                          */
+    --ring:          #3b82f6;
+    --success:       #4ade80;   /* green-400                          */
+    --success-bg:    #14532d;   /* green-900                          */
   }
 }
 
 /* ─── Tailwind semantic utilities ───────────────────────────────
-   @theme inline maps the CSS variables above to Tailwind class
-   names (bg-background, text-foreground, border-border, etc.).
-   "inline" means Tailwind outputs var(--color-*) directly, so
-   the utilities automatically respond to the dark mode override
-   above without needing a dark: variant in every component.
+   Maps CSS variables to Tailwind class names used across components.
 ──────────────────────────────────────────────────────────────── */
 @theme inline {
-  --color-background:          var(--bg);
-  --color-foreground:          var(--fg);
-  --color-card:                var(--card);
-  --color-card-foreground:     var(--card-fg);
-  --color-border:              var(--border);
-  --color-input:               var(--input);
-  --color-primary:             var(--primary);
-  --color-primary-foreground:  var(--primary-fg);
-  --color-secondary:           var(--secondary);
+  --color-background:           var(--bg);
+  --color-foreground:           var(--fg);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-fg);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-fg);
+  --color-secondary:            var(--secondary);
   --color-secondary-foreground: var(--secondary-fg);
-  --color-muted:               var(--muted);
-  --color-muted-foreground:    var(--muted-fg);
-  --color-ring:                var(--ring);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-fg);
+  --color-ring:                 var(--ring);
 }
 
 /* ─── Base reset ─────────────────────────────────────────────── */
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Transitions — 150ms per framework guidelines ──────────────
+   Applied globally so all interactive elements feel snappy.
+──────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
