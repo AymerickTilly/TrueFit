@@ -29,31 +29,18 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* Left panel — branding */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-primary p-12">
-        <div>
-          <span className="text-2xl font-bold text-white tracking-tight">TrueFit</span>
-        </div>
-        <div className="space-y-4">
-          <h1 className="text-4xl font-bold text-white leading-tight">
-            Locked out?<br />We've got you.
-          </h1>
-          <p className="text-blue-200 text-lg">
-            Enter your email and we'll send you a secure link to reset your password.
-          </p>
-        </div>
-        <p className="text-blue-300 text-sm">© 2026 TrueFit</p>
-      </div>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md">
 
-      {/* Right panel — form */}
-      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
-        <div className="w-full max-w-sm space-y-8">
+        {/* Card */}
+        <div className="rounded-2xl bg-card px-10 py-10 shadow-xl shadow-blue-100/60 border border-border">
 
-          <div className="space-y-1">
-            <h2 className="text-2xl font-semibold text-foreground">Reset your password</h2>
+          {/* Header */}
+          <div className="mb-8 space-y-1 text-center">
+            <span className="text-xl font-bold text-primary tracking-tight">TrueFit</span>
+            <h1 className="text-2xl font-semibold text-foreground">Reset your password</h1>
             <p className="text-sm text-muted-foreground">
-              We'll send a reset link to your email address.
+              Enter your email and we'll send you a reset link.
             </p>
           </div>
 
@@ -64,7 +51,7 @@ export default function ForgotPasswordPage() {
                   A reset link has been sent to <strong>{email}</strong>. Check your inbox.
                 </p>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground text-center">
                 Didn't receive it? Check your spam folder or{' '}
                 <button
                   onClick={() => setSent(false)}
@@ -105,7 +92,7 @@ export default function ForgotPasswordPage() {
             </form>
           )}
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             <Link
               to="/login"
               className="font-medium text-primary underline-offset-4 hover:underline"
@@ -115,6 +102,9 @@ export default function ForgotPasswordPage() {
           </p>
 
         </div>
+
+        <p className="mt-6 text-center text-xs text-muted-foreground">© 2026 TrueFit</p>
+
       </div>
     </div>
   )

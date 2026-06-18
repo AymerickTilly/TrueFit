@@ -40,32 +40,20 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      {/* Left panel — branding */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-primary p-12">
-        <div>
-          <span className="text-2xl font-bold text-white tracking-tight">TrueFit</span>
-        </div>
-        <div className="space-y-4">
-          <h1 className="text-4xl font-bold text-white leading-tight">
-            Build your profile.<br />Let AI do the rest.
-          </h1>
-          <p className="text-blue-200 text-lg">
-            One profile. Every job. A tailored CV generated in seconds — without inventing a thing.
-          </p>
-        </div>
-        <p className="text-blue-300 text-sm">© 2026 TrueFit</p>
-      </div>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="w-full max-w-md">
 
-      {/* Right panel — form */}
-      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
-        <div className="w-full max-w-sm space-y-8">
+        {/* Card */}
+        <div className="rounded-2xl bg-card px-10 py-10 shadow-xl shadow-blue-100/60 border border-border">
 
-          <div className="space-y-1">
-            <h2 className="text-2xl font-semibold text-foreground">Create an account</h2>
-            <p className="text-sm text-muted-foreground">Get started — it's free.</p>
+          {/* Header */}
+          <div className="mb-8 space-y-1 text-center">
+            <span className="text-xl font-bold text-primary tracking-tight">TrueFit</span>
+            <h1 className="text-2xl font-semibold text-foreground">Create an account</h1>
+            <p className="text-sm text-muted-foreground">Get started. It's free.</p>
           </div>
 
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <Input
               label="Email"
@@ -115,7 +103,8 @@ export default function SignupPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground">
+          {/* Footer */}
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             Already have an account?{' '}
             <Link
               to="/login"
@@ -126,6 +115,9 @@ export default function SignupPage() {
           </p>
 
         </div>
+
+        <p className="mt-6 text-center text-xs text-muted-foreground">© 2026 TrueFit</p>
+
       </div>
     </div>
   )
