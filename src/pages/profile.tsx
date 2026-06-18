@@ -9,20 +9,27 @@ import { VolunteeringSection } from '@/components/profile/volunteering-section'
 import { InterestsSection } from '@/components/profile/interests-section'
 import { Spinner } from '@/components/ui'
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+interface SectionProps {
+  title: string
+  children: React.ReactNode
+}
+
+function Section({ title, children }: SectionProps) {
   return (
-    <section className="border-b border-border py-8">
-      <h2 className="mb-5 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+    <div className="rounded-2xl border border-border bg-card px-6 py-5">
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
         {title}
       </h2>
       {children}
-    </section>
+    </div>
   )
 }
 
 export default function ProfilePage() {
   const { user } = useAuth()
   const { profile, loading, save } = useProfile()
+
+  const initials = user?.email?.slice(0, 2).toUpperCase() ?? 'TF'
 
   if (loading) {
     return (
@@ -33,12 +40,19 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-8 py-10">
-      <div className="mb-8">
-        <h1 className="text-xl font-semibold tracking-tight">Profile</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {user?.email}
-        </p>
+    <div className="mx-auto max-w-2xl px-6 py-8 space-y-4">
+
+      {/* Page header card */}
+      <div className="rounded-2xl border border-border bg-card px-6 py-5 flex items-center gap-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-sm font-bold text-white shadow-sm shadow-blue-200">
+          {initials}
+        </div>
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-foreground">
+            {profile?.full_name ?? 'Your profile'}
+          </p>
+          <p className="truncate text-xs text-muted-foreground">{user?.email}</p>
+        </div>
       </div>
 
       <Section title="Personal info">
@@ -50,39 +64,25 @@ export default function ProfilePage() {
       </Section>
 
       <Section title="Work experience">
-        <ExperienceSection
-          experience={profile?.work_experience ?? []}
-          onSave={save}
-        />
+        <ExperienceSection experience={profile?.work_experience ?? []} onSave={save} />
       </Section>
 
       <Section title="Education">
-        <EducationSection
-          education={profile?.education ?? []}
-          onSave={save}
-        />
+        <EducationSection education={profile?.education ?? []} onSave={save} />
       </Section>
 
       <Section title="Projects">
-        <ProjectSection
-          projects={profile?.projects ?? []}
-          onSave={save}
-        />
+        <ProjectSection projects={profile?.projects ?? []} onSave={save} />
       </Section>
 
       <Section title="Volunteering">
-        <VolunteeringSection
-          volunteering={profile?.volunteering ?? []}
-          onSave={save}
-        />
+        <VolunteeringSection volunteering={profile?.volunteering ?? []} onSave={save} />
       </Section>
 
       <Section title="Interests">
-        <InterestsSection
-          interests={profile?.interests ?? []}
-          onSave={save}
-        />
+        <InterestsSection interests={profile?.interests ?? []} onSave={save} />
       </Section>
+
     </div>
   )
 }
