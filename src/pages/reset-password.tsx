@@ -35,57 +35,78 @@ export default function ResetPasswordPage() {
       return
     }
 
-    // Password updated — send the user to their profile.
     navigate('/profile', { replace: true })
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-sm space-y-6">
-
-        <div className="space-y-1">
-          <h1 className="text-xl font-semibold">Set a new password</h1>
-          <p className="text-sm text-muted-foreground">
-            Choose a strong password for your account.
+    <div className="flex min-h-screen bg-background">
+      {/* Left panel — branding */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-primary p-12">
+        <div>
+          <span className="text-2xl font-bold text-white tracking-tight">TrueFit</span>
+        </div>
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold text-white leading-tight">
+            Almost there.<br />Set a new password.
+          </h1>
+          <p className="text-blue-200 text-lg">
+            Choose something strong and you'll be back in your account in seconds.
           </p>
         </div>
+        <p className="text-blue-300 text-sm">© 2026 TrueFit</p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            label="New password"
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            autoComplete="new-password"
-          />
+      {/* Right panel — form */}
+      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm space-y-8">
 
-          <Input
-            label="Confirm new password"
-            type="password"
-            placeholder="••••••••"
-            value={confirm}
-            onChange={e => setConfirm(e.target.value)}
-            required
-            autoComplete="new-password"
-          />
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold text-foreground">Set a new password</h2>
+            <p className="text-sm text-muted-foreground">
+              Choose a strong password for your account.
+            </p>
+          </div>
 
-          {error && (
-            <p className="text-sm text-red-500">{error}</p>
-          )}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <Input
+              label="New password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              autoComplete="new-password"
+              hint="At least 8 characters."
+            />
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="md"
-            loading={loading}
-            className="w-full"
-          >
-            Update password
-          </Button>
-        </form>
+            <Input
+              label="Confirm new password"
+              type="password"
+              placeholder="••••••••"
+              value={confirm}
+              onChange={e => setConfirm(e.target.value)}
+              required
+              autoComplete="new-password"
+            />
 
+            {error && (
+              <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600 border border-red-200">
+                {error}
+              </p>
+            )}
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              loading={loading}
+              className="w-full"
+            >
+              Update password
+            </Button>
+          </form>
+
+        </div>
       </div>
     </div>
   )
