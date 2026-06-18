@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { User, Briefcase, FileText, LogOut } from 'lucide-react'
+import { User, Briefcase, FileText, LogOut, Settings } from 'lucide-react'
 import { useAuth } from '@/hooks/use-auth'
 import Logo from '@/assets/logo.svg?react'
 
@@ -62,6 +62,18 @@ export function AppShell({ children }: AppShellProps) {
         {/* User footer */}
         <div className="border-t border-border px-4 py-4 space-y-2">
           <p className="truncate text-xs font-medium text-foreground">{user?.email}</p>
+          <NavLink
+            to="/account"
+            className={({ isActive }) =>
+              [
+                'flex items-center gap-2 text-xs transition-colors duration-150',
+                isActive ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground',
+              ].join(' ')
+            }
+          >
+            <Settings size={13} />
+            Account settings
+          </NavLink>
           <button
             onClick={handleSignOut}
             className="flex items-center gap-2 text-xs text-muted-foreground transition-colors duration-150 hover:text-red-500"

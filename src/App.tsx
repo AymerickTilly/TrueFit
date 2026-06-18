@@ -11,6 +11,7 @@ import ResetPasswordPage from '@/pages/reset-password'
 import ProfilePage from '@/pages/profile'
 import ApplicationsPage from '@/pages/applications'
 import GeneratePage from '@/pages/generate'
+import AccountPage from '@/pages/account'
 
 // Registers the PASSWORD_RECOVERY redirect inside the router so useNavigate works.
 function PasswordRecoveryHandler() {
@@ -31,6 +32,7 @@ function AppLayout() {
         <Route path="/profile"      element={<ProfilePage />} />
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path="/generate"     element={<GeneratePage />} />
+        <Route path="/account"      element={<AccountPage />} />
         <Route path="*"             element={<Navigate to="/profile" replace />} />
       </Routes>
     </AppShell>
