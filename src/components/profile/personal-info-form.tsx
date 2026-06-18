@@ -78,7 +78,7 @@ export function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
           Professional statement
         </label>
         <p className="text-xs text-muted-foreground">
-          Write naturally — keywords, a rough paragraph, or both. The AI uses this as context and will never copy it word for word.
+          Write naturally: keywords, a rough paragraph, or both. The AI uses this as context and will never copy it word for word.
         </p>
         <textarea
           rows={4}
@@ -93,7 +93,7 @@ export function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
           Personal attributes
         </label>
         <p className="text-xs text-muted-foreground">
-          Used verbatim in cover letters as a personal paragraph. Write in first person — who you are outside of work and what it says about how you work.
+          Used verbatim in cover letters as a personal paragraph. Write in first person: who you are outside of work and what it says about how you work.
         </p>
         <textarea
           rows={4}

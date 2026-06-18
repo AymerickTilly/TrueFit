@@ -9,8 +9,8 @@ interface ExperienceCardProps {
 
 export function ExperienceCard({ experience, onEdit, onDelete }: ExperienceCardProps) {
   const dateRange = experience.is_current
-    ? `${experience.start_date} — Present`
-    : `${experience.start_date}${experience.end_date ? ` — ${experience.end_date}` : ''}`
+    ? `${experience.start_date} to Present`
+    : `${experience.start_date}${experience.end_date ? ` to ${experience.end_date}` : ''}`
 
   return (
     <div className="rounded-md border border-border bg-card px-4 py-4 space-y-2">

@@ -64,7 +64,7 @@ export function SkillEntryForm({ skillName, onAdd, onCancel }: SkillEntryFormPro
 
       <div className="space-y-1.5">
         <p className="text-xs text-muted-foreground">
-          Brief description — what did you build or do with it? (optional)
+          Brief description: what did you build or do with it? (optional)
         </p>
         <textarea
           value={description}

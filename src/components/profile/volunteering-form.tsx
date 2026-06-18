@@ -41,7 +41,7 @@ export function VolunteeringForm({ initial, onSave, onCancel }: VolunteeringForm
       <div className="grid grid-cols-2 gap-4">
         <Input label="Role" value={role} onChange={e => setRole(e.target.value)} placeholder="Volunteer Tutor" required />
         <Input label="Organisation" value={organisation} onChange={e => setOrg(e.target.value)} placeholder="Code Club NZ" required />
-        <Input label="Date / period" value={date} onChange={e => setDate(e.target.value)} placeholder="Jan 2024 — Mar 2024" />
+        <Input label="Date / period" value={date} onChange={e => setDate(e.target.value)} placeholder="Jan 2024 to Mar 2024" />
         <div />
       </div>
 

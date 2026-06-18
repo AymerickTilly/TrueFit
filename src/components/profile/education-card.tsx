@@ -9,8 +9,8 @@ interface EducationCardProps {
 
 export function EducationCard({ education, onEdit, onDelete }: EducationCardProps) {
   const dateRange = education.end_date
-    ? `${education.start_date} — ${education.end_date}`
-    : `${education.start_date} — Ongoing`
+    ? `${education.start_date} to ${education.end_date}`
+    : `${education.start_date} to Ongoing`
 
   return (
     <div className="rounded-md border border-border bg-card px-4 py-4 space-y-1">

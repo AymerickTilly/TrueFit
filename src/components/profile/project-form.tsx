@@ -49,7 +49,7 @@ export function ProjectForm({ initial, onSave, onCancel }: ProjectFormProps) {
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">Description</label>
         <p className="text-xs text-muted-foreground">
-          What does it do and why did you build it? Write freely — the AI will shape this at generation time.
+          What does it do and why did you build it? Write freely. The AI will shape this at generation time.
         </p>
         <textarea
           value={description}

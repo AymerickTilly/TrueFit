@@ -97,7 +97,7 @@ export default function GeneratePage() {
           >
             {applications.map(app => (
               <option key={app.id} value={app.id}>
-                {app.role_title} — {app.company_name}
+                {app.role_title} at {app.company_name}
               </option>
             ))}
           </select>

@@ -96,7 +96,7 @@ export function ExperienceForm({ initial, onSave, onCancel }: ExperienceFormProp
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">Tasks and responsibilities</label>
         <p className="text-xs text-muted-foreground">
-          One bullet per line. Write what you did — the AI can help expand with outcome clauses using the tools listed below.
+          One bullet per line. Write what you did. The AI can help expand with outcome clauses using the tools listed below.
         </p>
         <textarea
           value={tasks}
