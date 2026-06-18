@@ -125,7 +125,7 @@ function PasswordForm() {
     const { error: updateError } = await updatePassword(next)
     setLoading(false)
 
-    if (updateError) { setError(updateError.message); return }
+    if (updateError) { setError(updateError); return }
 
     setSuccess('Password updated successfully.')
     setCurrent('')
