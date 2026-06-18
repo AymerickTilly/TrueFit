@@ -40,66 +40,92 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-sm space-y-6">
+    <div className="flex min-h-screen bg-background">
+      {/* Left panel — branding */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-primary p-12">
+        <div>
+          <span className="text-2xl font-bold text-white tracking-tight">TrueFit</span>
+        </div>
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold text-white leading-tight">
+            Build your profile.<br />Let AI do the rest.
+          </h1>
+          <p className="text-blue-200 text-lg">
+            One profile. Every job. A tailored CV generated in seconds — without inventing a thing.
+          </p>
+        </div>
+        <p className="text-blue-300 text-sm">© 2026 TrueFit</p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            label="Email"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-          />
+      {/* Right panel — form */}
+      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm space-y-8">
 
-          <Input
-            label="Password"
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            autoComplete="new-password"
-            hint="At least 6 characters."
-          />
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold text-foreground">Create an account</h2>
+            <p className="text-sm text-muted-foreground">Get started — it's free.</p>
+          </div>
 
-          <Input
-            label="Confirm password"
-            type="password"
-            placeholder="••••••••"
-            value={confirm}
-            onChange={e => setConfirm(e.target.value)}
-            required
-            autoComplete="new-password"
-          />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <Input
+              label="Email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
 
-          {error && (
-            <p className="text-sm text-red-500">{error}</p>
-          )}
+            <Input
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              autoComplete="new-password"
+              hint="At least 6 characters."
+            />
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="md"
-            loading={loading}
-            className="w-full"
-          >
-            Create account
-          </Button>
-        </form>
+            <Input
+              label="Confirm password"
+              type="password"
+              placeholder="••••••••"
+              value={confirm}
+              onChange={e => setConfirm(e.target.value)}
+              required
+              autoComplete="new-password"
+            />
 
-        <p className="text-center text-sm text-muted-foreground">
-          Already have an account?{' '}
-          <Link
-            to="/login"
-            className="font-medium text-foreground underline-offset-4 hover:underline"
-          >
-            Sign in
-          </Link>
-        </p>
+            {error && (
+              <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600 border border-red-200">
+                {error}
+              </p>
+            )}
 
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              loading={loading}
+              className="w-full"
+            >
+              Create account
+            </Button>
+          </form>
+
+          <p className="text-center text-sm text-muted-foreground">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Sign in
+            </Link>
+          </p>
+
+        </div>
       </div>
     </div>
   )
