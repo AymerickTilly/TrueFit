@@ -29,37 +29,45 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md">
+    <div
+      className="flex min-h-screen items-center justify-center px-4 py-12"
+      style={{ background: 'linear-gradient(145deg, #fdf8f0 0%, #f0f4ff 55%, #eaecfb 100%)' }}
+    >
+      <div className="w-full max-w-sm">
 
-        {/* Card */}
-        <div className="rounded-2xl bg-card px-10 py-10 shadow-xl shadow-blue-100/60 border border-border">
-
-          {/* Header */}
-          <div className="mb-8 space-y-1 text-center">
-            <span className="text-xl font-bold text-primary tracking-tight">TrueFit</span>
-            <h1 className="text-2xl font-semibold text-foreground">Reset your password</h1>
-            <p className="text-sm text-muted-foreground">
-              Enter your email and we'll send you a reset link.
+        {/* Logo mark */}
+        <div className="mb-8 flex flex-col items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary shadow-md shadow-blue-300/40">
+            <span className="text-lg font-bold tracking-tight text-white">T</span>
+          </div>
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">Reset your password</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Enter your email and we'll send you a link.
             </p>
           </div>
+        </div>
 
+        {/* Card */}
+        <div
+          className="rounded-3xl border border-white/80 bg-white px-8 py-8"
+          style={{ boxShadow: '0 8px 40px rgba(37,99,235,0.10), 0 1px 4px rgba(0,0,0,0.04)' }}
+        >
           {sent ? (
             <div className="space-y-4">
-              <div className="rounded-md bg-blue-50 border border-blue-200 px-4 py-3">
+              <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-4">
                 <p className="text-sm text-blue-800">
                   A reset link has been sent to <strong>{email}</strong>. Check your inbox.
                 </p>
               </div>
-              <p className="text-sm text-muted-foreground text-center">
-                Didn't receive it? Check your spam folder or{' '}
+              <p className="text-center text-sm text-muted-foreground">
+                Didn't receive it?{' '}
                 <button
                   onClick={() => setSent(false)}
                   className="font-medium text-primary underline-offset-4 hover:underline"
                 >
-                  try again
+                  Try again
                 </button>
-                .
               </p>
             </div>
           ) : (
@@ -75,36 +83,25 @@ export default function ForgotPasswordPage() {
               />
 
               {error && (
-                <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600 border border-red-200">
+                <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-600">
                   {error}
                 </p>
               )}
 
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                loading={loading}
-                className="w-full"
-              >
+              <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full">
                 Send reset link
               </Button>
             </form>
           )}
-
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            <Link
-              to="/login"
-              className="font-medium text-primary underline-offset-4 hover:underline"
-            >
-              Back to sign in
-            </Link>
-          </p>
-
         </div>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">© 2026 TrueFit</p>
+        <p className="mt-5 text-center text-sm text-muted-foreground">
+          <Link to="/login" className="font-medium text-primary underline-offset-4 hover:underline">
+            Back to sign in
+          </Link>
+        </p>
 
+        <p className="mt-6 text-center text-xs text-muted-foreground/60">© 2026 TrueFit</p>
       </div>
     </div>
   )
