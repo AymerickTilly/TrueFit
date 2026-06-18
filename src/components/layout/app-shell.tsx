@@ -31,8 +31,8 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      {/* Sidebar */}
-      <aside className="flex w-56 flex-col border-r border-border bg-card">
+      {/* Sidebar — sticky so sign out stays visible on long pages */}
+      <aside className="sticky top-0 h-screen flex w-56 flex-col border-r border-border bg-card">
         {/* Logo */}
         <div className="flex items-center px-5 py-5 border-b border-border">
           <Logo className="h-7 w-auto" aria-label="TrueFit" />
