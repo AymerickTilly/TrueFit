@@ -31,22 +31,25 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      <aside className="flex w-56 flex-col border-r border-border">
-        <div className="px-4 py-5">
+      {/* Sidebar */}
+      <aside className="flex w-56 flex-col border-r border-border bg-card">
+        {/* Logo */}
+        <div className="flex items-center px-5 py-5 border-b border-border">
           <Logo className="h-7 w-auto" aria-label="TrueFit" />
         </div>
 
-        <nav className="flex-1 px-2 py-2">
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-4 space-y-1">
           {navItems.map(({ to, label, icon }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
                 [
-                  'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors',
+                  'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150',
                   isActive
-                    ? 'bg-muted text-foreground font-medium'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:bg-secondary hover:text-secondary-foreground',
                 ].join(' ')
               }
             >
@@ -56,11 +59,12 @@ export function AppShell({ children }: AppShellProps) {
           ))}
         </nav>
 
-        <div className="border-t border-border px-4 py-4">
-          <p className="truncate text-xs text-muted-foreground">{user?.email}</p>
+        {/* User footer */}
+        <div className="border-t border-border px-4 py-4 space-y-2">
+          <p className="truncate text-xs font-medium text-foreground">{user?.email}</p>
           <button
             onClick={handleSignOut}
-            className="mt-2 flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+            className="flex items-center gap-2 text-xs text-muted-foreground transition-colors duration-150 hover:text-red-500"
           >
             <LogOut size={13} />
             Sign out
@@ -68,6 +72,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </aside>
 
+      {/* Main content */}
       <main className="flex-1 overflow-y-auto">
         {children}
       </main>
