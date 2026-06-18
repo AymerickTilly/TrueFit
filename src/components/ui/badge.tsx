@@ -8,8 +8,8 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<NonNullable<BadgeProps['variant']>, string> = {
-  default:     'bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900',
-  secondary:   'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300',
+  default:     'bg-primary text-primary-foreground',
+  secondary:   'bg-secondary text-secondary-foreground',
   success:     'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400',
   destructive: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400',
   outline:     'border border-border text-foreground',
