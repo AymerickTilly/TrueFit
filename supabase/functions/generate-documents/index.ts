@@ -5,8 +5,8 @@
 // Secret:    npx supabase secrets set GROQ_API_KEY=your_key
 // Local dev: npx supabase functions serve generate-documents
 
-const XAI_URL   = 'https://api.groq.com/openai/v1/chat/completions'
-const XAI_MODEL = 'llama-3.3-70b-versatile'
+const GROQ_URL   = 'https://api.groq.com/openai/v1/chat/completions'
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
 const MAX_TOKENS: Record<string, number> = {
   analysis: 1024,
@@ -48,14 +48,14 @@ Deno.serve(async (req: Request) => {
 
     const results = await Promise.all(
       prompts.map(async ({ type, content }) => {
-        const response = await fetch(XAI_URL, {
+        const response = await fetch(GROQ_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
-            model: XAI_MODEL,
+            model: GROQ_MODEL,
             messages: [{ role: 'user', content }],
             temperature: 0.3,
             max_tokens: MAX_TOKENS[type] ?? DEFAULT_MAX_TOKENS,
@@ -75,7 +75,7 @@ Deno.serve(async (req: Request) => {
           content: outputText,
           tokens_input:  data.usage?.prompt_tokens     ?? 0,
           tokens_output: data.usage?.completion_tokens ?? 0,
-          model_used: XAI_MODEL,
+          model_used: GROQ_MODEL,
         }
       }),
     )
