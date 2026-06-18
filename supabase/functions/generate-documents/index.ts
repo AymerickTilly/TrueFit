@@ -7,7 +7,13 @@
 
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
-const MAX_TOKENS = 4096
+
+const MAX_TOKENS: Record<string, number> = {
+  analysis: 1024,
+  improve:  1024,
+  cv:       4096,
+}
+const DEFAULT_MAX_TOKENS = 2048
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -52,7 +58,7 @@ Deno.serve(async (req: Request) => {
             model: GROQ_MODEL,
             messages: [{ role: 'user', content }],
             temperature: 0.3,
-            max_tokens: MAX_TOKENS,
+            max_tokens: MAX_TOKENS[type] ?? DEFAULT_MAX_TOKENS,
           }),
         })
 
