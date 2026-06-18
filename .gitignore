@@ -39,5 +39,9 @@ yarn-error.log*
 # PDF output (generated at runtime)
 public/generated/
 
+# Claude Code — exclude compiled Python cache from skills
+.claude/skills/**/__pycache__/
+.claude/settings.local.json
+
 .vercel
 .env*
