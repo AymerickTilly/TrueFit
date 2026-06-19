@@ -1,5 +1,6 @@
 import { useAuth } from '@/hooks/use-auth'
 import { useProfile } from '@/hooks/use-profile'
+import { useReveal } from '@/hooks/use-reveal'
 import { PersonalInfoForm } from '@/components/profile/personal-info-form'
 import { SkillsSection } from '@/components/profile/skills-section'
 import { ExperienceSection } from '@/components/profile/experience-section'
@@ -16,8 +17,9 @@ interface SectionProps {
 }
 
 function Section({ title, description, children }: SectionProps) {
+  const ref = useReveal<HTMLElement>()
   return (
-    <section className="flex gap-10 border-t border-border py-10">
+    <section ref={ref} data-reveal className="flex gap-10 border-t border-border py-10">
       <div className="w-44 shrink-0 pt-0.5">
         <h2 className="text-sm font-semibold text-foreground">{title}</h2>
         <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
@@ -50,11 +52,11 @@ export default function ProfilePage() {
         <PersonalInfoForm key={profile?.id ?? 'new'} profile={profile} onSave={save} />
       </Section>
 
-      <Section title="Skills" description="Technologies, tools, and competencies you want to be matched against job requirements.">
+      <Section title="Skills" description="Technologies, tools, and competencies matched against job requirements.">
         <SkillsSection profileId={profile?.id} />
       </Section>
 
-      <Section title="Work experience" description="Roles and responsibilities that can be highlighted in generated CVs.">
+      <Section title="Work experience" description="Roles and responsibilities highlighted in generated CVs.">
         <ExperienceSection experience={profile?.work_experience ?? []} onSave={save} />
       </Section>
 

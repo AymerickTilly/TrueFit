@@ -65,7 +65,7 @@ export function SkillsSection({ profileId }: SkillsSectionProps) {
 
       {skills.length > 0 && skills !== null && (
         <>
-          <div className="space-y-2">
+          <div className="flex flex-wrap gap-2">
             {skills.map((skill: SkillItem) => (
               <SkillCard key={skill.id} skill={skill} onDelete={handleDelete} />
             ))}
