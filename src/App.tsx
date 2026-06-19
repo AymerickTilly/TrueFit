@@ -4,6 +4,7 @@ import { AuthProvider } from '@/hooks/use-auth'
 import { useAuth } from '@/hooks/use-auth'
 import { ProtectedRoute } from '@/components/layout/protected-route'
 import { AppShell } from '@/components/layout/app-shell'
+import { PageTransition } from '@/components/layout/page-transition'
 import LoginPage from '@/pages/login'
 import SignupPage from '@/pages/signup'
 import ForgotPasswordPage from '@/pages/forgot-password'
@@ -28,13 +29,15 @@ function PasswordRecoveryHandler() {
 function AppLayout() {
   return (
     <AppShell>
-      <Routes>
-        <Route path="/profile"      element={<ProfilePage />} />
-        <Route path="/applications" element={<ApplicationsPage />} />
-        <Route path="/generate"     element={<GeneratePage />} />
-        <Route path="/account"      element={<AccountPage />} />
-        <Route path="*"             element={<Navigate to="/profile" replace />} />
-      </Routes>
+      <PageTransition>
+        <Routes>
+          <Route path="/profile"      element={<ProfilePage />} />
+          <Route path="/applications" element={<ApplicationsPage />} />
+          <Route path="/generate"     element={<GeneratePage />} />
+          <Route path="/account"      element={<AccountPage />} />
+          <Route path="*"             element={<Navigate to="/profile" replace />} />
+        </Routes>
+      </PageTransition>
     </AppShell>
   )
 }

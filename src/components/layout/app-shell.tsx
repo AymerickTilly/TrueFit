@@ -20,7 +20,6 @@ export function AppShell({ children }: AppShellProps) {
     navigate('/login')
   }
 
-  // Close on outside click
   useEffect(() => {
     if (!menuOpen) return
     function onOutside(e: MouseEvent) {
@@ -32,7 +31,6 @@ export function AppShell({ children }: AppShellProps) {
     return () => document.removeEventListener('mousedown', onOutside)
   }, [menuOpen])
 
-  // Close on Escape
   useEffect(() => {
     if (!menuOpen) return
     function onKey(e: KeyboardEvent) {
@@ -61,21 +59,25 @@ export function AppShell({ children }: AppShellProps) {
       </a>
 
       {/* Topbar */}
-      <header className="sticky top-0 z-40 flex h-[52px] shrink-0 items-center gap-6 border-b border-border bg-card px-6">
+      <header className="sticky top-0 z-40 flex h-[52px] shrink-0 items-center border-b border-border bg-card px-6">
+
+        {/* Wordmark — left */}
         <span className="select-none text-[15px] text-foreground shrink-0">
           <span className="font-light">True</span><span className="font-semibold">Fit</span>
         </span>
 
-        <nav aria-label="Main" className="flex h-full items-center gap-0.5">
+        {/* Nav — absolutely centred in the bar */}
+        <nav
+          aria-label="Main"
+          className="absolute left-1/2 flex h-full -translate-x-1/2 items-center gap-0.5"
+        >
           <NavLink to="/profile"      className={navLink}>Profile</NavLink>
           <NavLink to="/applications" className={navLink}>Applications</NavLink>
           <NavLink to="/generate"     className={navLink}>Generate</NavLink>
         </nav>
 
-        <div className="flex-1" />
-
-        {/* Avatar → account menu */}
-        <div className="relative" ref={menuRef}>
+        {/* Avatar — right */}
+        <div className="ml-auto relative" ref={menuRef}>
           <button
             onClick={() => setMenuOpen(v => !v)}
             aria-label="Account menu"
@@ -113,7 +115,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </header>
 
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex flex-1 flex-col">
         {children}
       </main>
     </div>
