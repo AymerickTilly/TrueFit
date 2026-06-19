@@ -23,6 +23,7 @@ Voice: calm and direct. No hype. No "supercharge your career" copy. Speaks like 
 - Generic AI SaaS: cream/sand backgrounds, gradient CTA buttons, 01/02/03 section eyebrows, hero-metric grids, "AI-powered" badges everywhere.
 - Corporate HR software: navy dashboards, enterprise visual density, cold and bureaucratic.
 - Flashy startup landing pages: neon gradients, large hero numbers, overdesigned.
+- Dark sidebar SaaS clones: dark left chrome + white canvas, icon+label vertical nav, user avatar bottom-left. This is the most replicated template pattern of 2024–2026 and reads immediately as scaffolded.
 
 ## Design Principles
 
@@ -31,6 +32,13 @@ Voice: calm and direct. No hype. No "supercharge your career" copy. Speaks like 
 3. **One job per screen** — each page reveals only what the user needs at that moment. No anticipatory complexity.
 4. **Earned simplicity** — whitespace and negative space are deliberate, not empty. Every element present earns its place.
 5. **Confidence without hype** — the product is quietly capable. Let the output speak.
+
+## Layout decisions
+
+- **Topbar shell, no sidebar** — TrueFit has 3 pages. A permanent sidebar column imposes dashboard-tool weight on a focused writing tool. A 52px topbar gives the content area the full viewport.
+- **Nav as plain text links** — no icons, no active background pills. Weight contrast (font-medium + hairline underline) carries the active state. This is more editorial and less SaaS.
+- **Generate uses a split panel** — left: job selector + controls (288px fixed); right: CV output (flex-1). This matches how the tool is actually used: configure on the left, read and copy on the right.
+- **Profile and Account use the two-column settings template** — 176px label+description column, flex-1 content column. Stripe/Linear-style, but without sidebar it no longer reads as a clone.
 
 ## Accessibility & Inclusion
 

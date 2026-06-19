@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Copy, Check, Sparkles } from 'lucide-react'
+import { Copy, Check, Sparkles, FileText } from 'lucide-react'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Spinner } from '@/components/ui'
 import { getProfileWithSkills } from '@/lib/api/profile'
@@ -35,7 +35,7 @@ export default function GeneratePage() {
     })
   }, [user, selectedId])
 
-  const selectedApp     = applications?.find(a => a.id === selectedId) ?? null
+  const selectedApp      = applications?.find(a => a.id === selectedId) ?? null
   const profileIncomplete = !profile?.full_name || profile.skill_items.length === 0
 
   async function handleGenerate() {
@@ -56,90 +56,127 @@ export default function GeneratePage() {
 
   if (profile === null || applications === null) {
     return (
-      <div className="flex h-full items-center justify-center py-24">
+      <div className="flex h-[calc(100vh-52px)] items-center justify-center">
         <Spinner size="lg" />
       </div>
     )
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-8 py-10 space-y-8">
+    <div className="flex h-[calc(100vh-52px)]">
 
-      <div>
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">Generate CV</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          TrueFit selects and frames only what you've listed — nothing invented.
-        </p>
-      </div>
+      {/* ── Left panel ─────────────────────────────────── */}
+      <aside className="w-72 shrink-0 overflow-y-auto border-r border-border px-6 py-8 space-y-6">
 
-      {profileIncomplete && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-          Complete your profile first — add your name and at least one skill.
+        <div>
+          <h1 className="text-base font-semibold text-foreground">Generate CV</h1>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Only what you've listed — nothing invented.
+          </p>
         </div>
-      )}
 
-      <div className="space-y-3">
-        <label htmlFor="job-select" className="block text-sm font-medium text-foreground">
-          Job application
-        </label>
-        {applications.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            No applications yet. Add one in Applications first.
-          </p>
-        ) : (
-          <select
-            id="job-select"
-            name="job-select"
-            value={selectedId}
-            onChange={e => { setSelectedId(e.target.value); setResult(null); setError(null) }}
-            className="w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/25 cursor-pointer"
-          >
-            {applications.map(app => (
-              <option key={app.id} value={app.id}>
-                {app.role_title} at {app.company_name}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
-
-      <div className="flex items-center gap-4">
-        <Button
-          variant="primary"
-          size="md"
-          className="gap-2"
-          onClick={handleGenerate}
-          loading={generating}
-          disabled={!selectedApp || profileIncomplete || generating}
-        >
-          <Sparkles size={14} />
-          Generate
-        </Button>
-        {generating && step && (
-          <p className="text-sm text-muted-foreground motion-safe:animate-pulse">
-            {STEP_LABELS[step]}
-          </p>
-        )}
-      </div>
-
-      {error && (
-        <p className="text-sm text-red-600">{error}</p>
-      )}
-
-      {result && (
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-foreground">Generated CV</h2>
-            <Button variant="ghost" size="sm" className="gap-1.5" onClick={handleCopy}>
-              {copied ? <Check size={13} /> : <Copy size={13} />}
-              {copied ? 'Copied' : 'Copy'}
-            </Button>
+        {profileIncomplete && (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
+            Complete your profile first — add your name and at least one skill.
           </div>
-          <pre className="whitespace-pre-wrap rounded-xl border border-border bg-card px-6 py-5 text-sm text-foreground font-sans leading-relaxed">
-            {result}
-          </pre>
+        )}
+
+        {/* Job selector */}
+        <div className="space-y-2">
+          <label htmlFor="job-select" className="block text-xs font-medium text-foreground">
+            Job application
+          </label>
+          {applications.length === 0 ? (
+            <p className="text-xs text-muted-foreground">
+              No applications yet. Add one first.
+            </p>
+          ) : (
+            <select
+              id="job-select"
+              name="job-select"
+              value={selectedId}
+              onChange={e => { setSelectedId(e.target.value); setResult(null); setError(null) }}
+              className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/25 cursor-pointer"
+            >
+              {applications.map(app => (
+                <option key={app.id} value={app.id}>
+                  {app.role_title} · {app.company_name}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
-      )}
+
+        {/* Profile summary */}
+        {profile && (
+          <div className="rounded-lg border border-border bg-card px-4 py-3 space-y-1">
+            <p className="text-xs font-medium text-foreground">Profile</p>
+            <p className="text-xs text-muted-foreground">
+              {profile.skill_items.length} skill{profile.skill_items.length !== 1 ? 's' : ''}
+              {profile.work_experience?.length
+                ? ` · ${profile.work_experience.length} role${profile.work_experience.length !== 1 ? 's' : ''}`
+                : ''}
+              {profile.projects?.length
+                ? ` · ${profile.projects.length} project${profile.projects.length !== 1 ? 's' : ''}`
+                : ''}
+            </p>
+          </div>
+        )}
+
+        <div className="space-y-2">
+          <Button
+            variant="primary"
+            size="md"
+            className="w-full gap-2 justify-center"
+            onClick={handleGenerate}
+            loading={generating}
+            disabled={!selectedApp || profileIncomplete || generating}
+          >
+            <Sparkles size={14} />
+            Generate
+          </Button>
+
+          {generating && step && (
+            <p className="text-center text-xs text-muted-foreground motion-safe:animate-pulse">
+              {STEP_LABELS[step]}
+            </p>
+          )}
+
+          {error && (
+            <p className="text-xs text-red-600" role="alert">{error}</p>
+          )}
+        </div>
+      </aside>
+
+      {/* ── Right panel ────────────────────────────────── */}
+      <div className="flex-1 overflow-y-auto">
+        {result ? (
+          <div className="mx-auto max-w-3xl px-10 py-8">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-foreground">Generated CV</h2>
+              <Button variant="ghost" size="sm" className="gap-1.5" onClick={handleCopy}>
+                {copied ? <Check size={13} /> : <Copy size={13} />}
+                {copied ? 'Copied' : 'Copy'}
+              </Button>
+            </div>
+            <pre className="whitespace-pre-wrap rounded-xl border border-border bg-card px-7 py-6 font-sans text-sm leading-relaxed text-foreground">
+              {result}
+            </pre>
+          </div>
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card">
+              <FileText size={18} className="text-muted-foreground" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-foreground">No CV generated yet</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Select a job and hit Generate.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
