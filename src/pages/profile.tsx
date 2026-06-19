@@ -17,7 +17,7 @@ interface SectionProps {
 function Section({ title, children }: SectionProps) {
   return (
     <section className="rounded-2xl border border-border bg-card px-6 py-5">
-      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <h2 className="mb-4 text-sm font-semibold text-foreground">
         {title}
       </h2>
       {children}

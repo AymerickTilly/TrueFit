@@ -48,8 +48,8 @@ export function AppShell({ children }: AppShellProps) {
                 [
                   'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150',
                   isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:bg-secondary hover:text-secondary-foreground',
+                    ? 'bg-primary/10 text-primary font-semibold'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                 ].join(' ')
               }
             >
@@ -76,7 +76,7 @@ export function AppShell({ children }: AppShellProps) {
           </NavLink>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-2 text-xs text-muted-foreground transition-colors duration-150 hover:text-red-500"
+            className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground transition-colors duration-150 hover:text-red-500"
           >
             <LogOut size={13} />
             Sign out

@@ -169,7 +169,7 @@ export default function AccountPage() {
 
       <section className="rounded-2xl border border-border bg-card px-6 py-5 space-y-4">
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Email address</h2>
+          <h2 className="text-sm font-semibold text-foreground">Email address</h2>
           <p className="mt-0.5 text-xs text-muted-foreground">A confirmation will be sent to the new address.</p>
         </div>
         <EmailForm />
@@ -177,7 +177,7 @@ export default function AccountPage() {
 
       <section className="rounded-2xl border border-border bg-card px-6 py-5 space-y-4">
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Password</h2>
+          <h2 className="text-sm font-semibold text-foreground">Password</h2>
           <p className="mt-0.5 text-xs text-muted-foreground">You will need to confirm with your current password.</p>
         </div>
         <PasswordForm />

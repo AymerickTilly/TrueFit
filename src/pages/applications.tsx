@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, Briefcase } from 'lucide-react'
 import { useAuth } from '@/hooks/use-auth'
 import { Button, Spinner } from '@/components/ui'
 import { JobForm } from '@/components/job/job-form'
@@ -73,9 +73,12 @@ export default function ApplicationsPage() {
         </div>
       ) : applications.length === 0 && !adding ? (
         <div className="rounded-2xl border border-dashed border-border bg-card px-6 py-14 text-center">
+          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+            <Briefcase size={18} />
+          </div>
           <p className="text-sm font-medium text-foreground">No applications yet</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Paste a job posting above to get started.
+            Click <strong>New</strong> above to paste a job posting and get started.
           </p>
         </div>
       ) : (

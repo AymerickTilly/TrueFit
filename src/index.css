@@ -74,6 +74,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* ─── Auth page background — warm gradient, dark-mode aware ───── */
+.auth-bg {
+  background: linear-gradient(145deg, #fdf8f0 0%, #f0f4ff 55%, #eaecfb 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .auth-bg {
+    background: linear-gradient(145deg, #0f1118 0%, #0b1020 55%, #0a0e1a 100%);
+  }
+}
+
 /* ─── Transitions — 150ms per framework guidelines ──────────────
    Guarded by prefers-reduced-motion so animations are opt-in.
 ──────────────────────────────────────────────────────────────── */

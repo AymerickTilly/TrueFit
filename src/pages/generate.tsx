@@ -122,7 +122,7 @@ export default function GeneratePage() {
         )}
 
         <div className="space-y-2">
-          <label htmlFor="job-select" className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <label htmlFor="job-select" className="text-sm font-medium text-foreground">
             Job application
           </label>
           {applications.length === 0 ? (
@@ -171,7 +171,7 @@ export default function GeneratePage() {
       {result && (
         <div className="rounded-2xl border border-border bg-card px-6 py-5 space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <h2 className="text-sm font-semibold text-foreground">
               Generated CV
             </h2>
             <Button variant="ghost" size="sm" className="gap-1.5" onClick={handleCopy}>
