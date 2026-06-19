@@ -1,54 +1,53 @@
 @import "tailwindcss";
 
-/* ─── Design tokens: Professional Blue + White ──────────────────
-   Palette informed by UI/UX Pro Max SaaS + Recruitment guidelines:
-   Trust blue primary, clean white surfaces, blue-tinted borders,
-   fast 150-200ms transitions, no decorative shadows or gradients.
+/* ─── Design tokens ─────────────────────────────────────────────
+   Stone-neutral canvas — no blue tinting on backgrounds.
+   Blue is reserved for primary actions only.
 ──────────────────────────────────────────────────────────────── */
 :root {
-  --bg:            #f0f6ff;   /* page background — faint blue-white  */
-  --fg:            #0f172a;   /* primary text — near-black navy      */
-  --card:          #ffffff;   /* card / surface bg — pure white      */
-  --card-fg:       #0f172a;
-  --border:        #bfdbfe;   /* blue-200 — subtle blue borders      */
-  --input:         #bfdbfe;   /* input borders                       */
-  --primary:       #2563eb;   /* blue-600 — trust blue               */
+  --bg:            #f5f5f4;   /* stone-100 — barely-there off-white  */
+  --fg:            #1c1917;   /* stone-900 — warm near-black          */
+  --card:          #ffffff;
+  --card-fg:       #1c1917;
+  --border:        #e7e5e4;   /* stone-200                            */
+  --input:         #d6d3d1;   /* stone-300                            */
+  --primary:       #2563eb;   /* blue-600                             */
   --primary-fg:    #ffffff;
-  --secondary:     #eff6ff;   /* blue-50 — soft secondary bg         */
-  --secondary-fg:  #1e40af;   /* blue-800                            */
-  --muted:         #eff6ff;   /* blue-50 — subtle backgrounds        */
-  --muted-fg:      #64748b;   /* slate-500 — subdued text            */
-  --ring:          #2563eb;   /* focus ring matches primary          */
-  --success:       #16a34a;   /* green-600 — status badges           */
-  --success-bg:    #dcfce7;   /* green-100                           */
+  --secondary:     #f5f5f4;
+  --secondary-fg:  #1c1917;
+  --muted:         #f5f5f4;
+  --muted-fg:      #78716c;   /* stone-500                            */
+  --ring:          #2563eb;
+  --success:       #16a34a;
+  --success-bg:    #dcfce7;
+  /* sidebar */
+  --sidebar:       #0f172a;   /* slate-900 — dark charcoal            */
+  --sidebar-fg:    #f8fafc;   /* slate-50                             */
+  --sidebar-muted: #94a3b8;   /* slate-400                            */
+  --sidebar-hover: rgba(255,255,255,0.06);
+  --sidebar-active:rgba(255,255,255,0.10);
 }
 
-/* ─── Dark mode ─────────────────────────────────────────────────
-   Same blue accent on dark navy — trust blue stays visible.
-──────────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg:            #0b1120;   /* deep navy background               */
-    --fg:            #f0f6ff;
-    --card:          #111827;   /* gray-900                           */
-    --card-fg:       #f0f6ff;
-    --border:        #1e3a5f;   /* dark blue border                   */
-    --input:         #1e3a5f;
-    --primary:       #3b82f6;   /* blue-500 — slightly lighter on dark */
+    --bg:            #0f0f0e;
+    --fg:            #f5f5f4;
+    --card:          #1c1917;
+    --card-fg:       #f5f5f4;
+    --border:        #292524;   /* stone-800 */
+    --input:         #3d3835;
+    --primary:       #3b82f6;
     --primary-fg:    #ffffff;
-    --secondary:     #1e2d40;
-    --secondary-fg:  #93c5fd;   /* blue-300                           */
-    --muted:         #1e2d40;
-    --muted-fg:      #94a3b8;   /* slate-400                          */
+    --secondary:     #1c1917;
+    --secondary-fg:  #e7e5e4;
+    --muted:         #1c1917;
+    --muted-fg:      #a8a29e;   /* stone-400 */
     --ring:          #3b82f6;
-    --success:       #4ade80;   /* green-400                          */
-    --success-bg:    #14532d;   /* green-900                          */
+    --success:       #4ade80;
+    --success-bg:    #14532d;
   }
 }
 
-/* ─── Tailwind semantic utilities ───────────────────────────────
-   Maps CSS variables to Tailwind class names used across components.
-──────────────────────────────────────────────────────────────── */
 @theme inline {
   --color-background:           var(--bg);
   --color-foreground:           var(--fg);
@@ -65,11 +64,11 @@
   --color-ring:                 var(--ring);
 }
 
-/* ─── Base reset ─────────────────────────────────────────────── */
+/* ─── Base ───────────────────────────────────────────────────── */
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -78,20 +77,7 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
-/* ─── Auth page background — warm gradient, dark-mode aware ───── */
-.auth-bg {
-  background: linear-gradient(145deg, #fdf8f0 0%, #f0f4ff 55%, #eaecfb 100%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .auth-bg {
-    background: linear-gradient(145deg, #0f1118 0%, #0b1020 55%, #0a0e1a 100%);
-  }
-}
-
-/* ─── Transitions — 150ms per framework guidelines ──────────────
-   Guarded by prefers-reduced-motion so animations are opt-in.
-──────────────────────────────────────────────────────────────── */
+/* ─── Transitions ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
   *, *::before, *::after {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

@@ -11,16 +11,18 @@ import { Spinner } from '@/components/ui'
 
 interface SectionProps {
   title: string
+  description: string
   children: React.ReactNode
 }
 
-function Section({ title, children }: SectionProps) {
+function Section({ title, description, children }: SectionProps) {
   return (
-    <section className="rounded-2xl border border-border bg-card px-6 py-5">
-      <h2 className="mb-4 text-sm font-semibold text-foreground">
-        {title}
-      </h2>
-      {children}
+    <section className="flex gap-10 border-t border-border py-10">
+      <div className="w-44 shrink-0 pt-0.5">
+        <h2 className="text-sm font-semibold text-foreground">{title}</h2>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
+      </div>
+      <div className="flex-1 min-w-0">{children}</div>
     </section>
   )
 }
@@ -28,8 +30,6 @@ function Section({ title, children }: SectionProps) {
 export default function ProfilePage() {
   const { user } = useAuth()
   const { profile, loading, save } = useProfile()
-
-  const initials = user?.email?.slice(0, 2).toUpperCase() ?? 'TF'
 
   if (loading) {
     return (
@@ -40,49 +40,39 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-8 space-y-4">
-
-      {/* Page header card */}
-      <div className="rounded-2xl border border-border bg-card px-6 py-5 flex items-center gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-sm font-bold text-white shadow-sm shadow-blue-200">
-          {initials}
-        </div>
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-foreground">
-            {profile?.full_name ?? 'Your profile'}
-          </p>
-          <p className="truncate text-xs text-muted-foreground">{user?.email}</p>
-        </div>
+    <div className="mx-auto max-w-3xl px-8 py-10">
+      <div className="mb-2">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Profile</h1>
+        <p className="mt-1 text-sm text-muted-foreground">{user?.email}</p>
       </div>
 
-      <Section title="Personal info">
+      <Section title="Personal info" description="Your name, location, and contact details for your CV header.">
         <PersonalInfoForm key={profile?.id ?? 'new'} profile={profile} onSave={save} />
       </Section>
 
-      <Section title="Skills">
+      <Section title="Skills" description="Technologies, tools, and competencies you want to be matched against job requirements.">
         <SkillsSection profileId={profile?.id} />
       </Section>
 
-      <Section title="Work experience">
+      <Section title="Work experience" description="Roles and responsibilities that can be highlighted in generated CVs.">
         <ExperienceSection experience={profile?.work_experience ?? []} onSave={save} />
       </Section>
 
-      <Section title="Education">
+      <Section title="Education" description="Degrees, diplomas, and certifications.">
         <EducationSection education={profile?.education ?? []} onSave={save} />
       </Section>
 
-      <Section title="Projects">
+      <Section title="Projects" description="Side projects, open source, or freelance work worth showcasing.">
         <ProjectSection projects={profile?.projects ?? []} onSave={save} />
       </Section>
 
-      <Section title="Volunteering">
+      <Section title="Volunteering" description="Community work, mentoring, or industry involvement.">
         <VolunteeringSection volunteering={profile?.volunteering ?? []} onSave={save} />
       </Section>
 
-      <Section title="Interests">
+      <Section title="Interests" description="Personal interests that add dimension to your profile.">
         <InterestsSection interests={profile?.interests ?? []} onSave={save} />
       </Section>
-
     </div>
   )
 }
