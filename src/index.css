@@ -65,6 +65,11 @@
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: var(--bg);
   color: var(--fg);

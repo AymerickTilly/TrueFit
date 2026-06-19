@@ -35,7 +35,7 @@ export default function GeneratePage() {
     })
   }, [user, selectedId])
 
-  const selectedApp      = applications?.find(a => a.id === selectedId) ?? null
+  const selectedApp       = applications?.find(a => a.id === selectedId) ?? null
   const profileIncomplete = !profile?.full_name || profile.skill_items.length === 0
 
   async function handleGenerate() {
@@ -65,8 +65,8 @@ export default function GeneratePage() {
   return (
     <div className="flex h-[calc(100vh-52px)]">
 
-      {/* ── Left panel ─────────────────────────────────── */}
-      <aside className="w-72 shrink-0 overflow-y-auto border-r border-border px-6 py-8 space-y-6">
+      {/* ── Left panel — controls (stone-100 bg, matches page bg) ── */}
+      <aside className="w-72 shrink-0 overflow-y-auto px-6 py-8 space-y-6">
 
         <div>
           <h1 className="text-base font-semibold text-foreground">Generate CV</h1>
@@ -81,7 +81,6 @@ export default function GeneratePage() {
           </div>
         )}
 
-        {/* Job selector */}
         <div className="space-y-2">
           <label htmlFor="job-select" className="block text-xs font-medium text-foreground">
             Job application
@@ -107,7 +106,6 @@ export default function GeneratePage() {
           )}
         </div>
 
-        {/* Profile summary */}
         {profile && (
           <div className="rounded-lg border border-border bg-card px-4 py-3 space-y-1">
             <p className="text-xs font-medium text-foreground">Profile</p>
@@ -132,12 +130,12 @@ export default function GeneratePage() {
             loading={generating}
             disabled={!selectedApp || profileIncomplete || generating}
           >
-            <Sparkles size={14} />
+            <Sparkles size={14} aria-hidden="true" />
             Generate
           </Button>
 
           {generating && step && (
-            <p className="text-center text-xs text-muted-foreground motion-safe:animate-pulse">
+            <p className="text-center text-xs text-muted-foreground motion-safe:animate-pulse" aria-live="polite">
               {STEP_LABELS[step]}
             </p>
           )}
@@ -148,28 +146,30 @@ export default function GeneratePage() {
         </div>
       </aside>
 
-      {/* ── Right panel ────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto">
+      {/* ── Right panel — output (white surface) ── */}
+      <div className="flex-1 overflow-y-auto bg-card border-l border-border">
         {result ? (
-          <div className="mx-auto max-w-3xl px-10 py-8">
+          <div className="mx-auto max-w-2xl px-10 py-8">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-sm font-semibold text-foreground">Generated CV</h2>
               <Button variant="ghost" size="sm" className="gap-1.5" onClick={handleCopy}>
-                {copied ? <Check size={13} /> : <Copy size={13} />}
-                {copied ? 'Copied' : 'Copy'}
+                {copied
+                  ? <><Check size={13} aria-hidden="true" />Copied</>
+                  : <><Copy size={13} aria-hidden="true" />Copy</>
+                }
               </Button>
             </div>
-            <pre className="whitespace-pre-wrap rounded-xl border border-border bg-card px-7 py-6 font-sans text-sm leading-relaxed text-foreground">
+            <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-foreground">
               {result}
             </pre>
           </div>
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card">
-              <FileText size={18} className="text-muted-foreground" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background">
+              <FileText size={18} className="text-muted-foreground" aria-hidden="true" />
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground">No CV generated yet</p>
+              <p className="text-sm font-medium text-foreground">No CV yet</p>
               <p className="mt-0.5 text-xs text-muted-foreground">
                 Select a job and hit Generate.
               </p>

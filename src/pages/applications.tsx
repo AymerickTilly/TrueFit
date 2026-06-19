@@ -41,14 +41,14 @@ export default function ApplicationsPage() {
 
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight text-foreground">Applications</h1>
+          <h1 className="text-xl font-semibold text-foreground">Applications</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {applications === null ? '' : count === 0 ? 'No applications yet.' : `${count} application${count !== 1 ? 's' : ''}`}
           </p>
         </div>
         {!adding && (
           <Button variant="primary" size="sm" className="gap-1.5 mt-0.5" onClick={() => setAdding(true)}>
-            <Plus size={13} /> New
+            <Plus size={13} aria-hidden="true" /> New application
           </Button>
         )}
       </div>
@@ -66,11 +66,11 @@ export default function ApplicationsPage() {
       ) : applications.length === 0 && !adding ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
-            <Briefcase size={20} />
+            <Briefcase size={20} aria-hidden="true" />
           </div>
           <p className="text-sm font-medium text-foreground">No applications yet</p>
           <p className="mt-1 text-xs text-muted-foreground max-w-xs">
-            Click <strong>New</strong> to paste a job posting and TrueFit will tailor your CV to it.
+            Click <strong>New application</strong> to paste a job posting and TrueFit will tailor your CV to it.
           </p>
         </div>
       ) : (

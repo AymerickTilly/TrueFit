@@ -20,6 +20,7 @@ export function AppShell({ children }: AppShellProps) {
     navigate('/login')
   }
 
+  // Close on outside click
   useEffect(() => {
     if (!menuOpen) return
     function onOutside(e: MouseEvent) {
@@ -29,6 +30,16 @@ export function AppShell({ children }: AppShellProps) {
     }
     document.addEventListener('mousedown', onOutside)
     return () => document.removeEventListener('mousedown', onOutside)
+  }, [menuOpen])
+
+  // Close on Escape
+  useEffect(() => {
+    if (!menuOpen) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [menuOpen])
 
   const navLink = ({ isActive }: { isActive: boolean }) =>
@@ -41,6 +52,14 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
+      {/* Skip link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-card focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:shadow-md focus:outline-none focus:ring-2 focus:ring-ring"
+      >
+        Skip to main content
+      </a>
+
       {/* Topbar */}
       <header className="sticky top-0 z-40 flex h-[52px] shrink-0 items-center gap-6 border-b border-border bg-card px-6">
         <span className="select-none text-[15px] text-foreground shrink-0">
@@ -94,7 +113,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </header>
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {children}
       </main>
     </div>

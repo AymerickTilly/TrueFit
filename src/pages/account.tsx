@@ -42,7 +42,7 @@ function EmailForm() {
         Current: <span className="font-medium text-foreground">{user?.email}</span>
       </p>
       <Input label="New email address" type="email" name="new-email" placeholder="new@example.com"
-        value={newEmail} onChange={e => setNewEmail(e.target.value)} required autoComplete="email" />
+        value={newEmail} onChange={e => setNewEmail(e.target.value)} required autoComplete="email" spellCheck={false} />
       <Input label="Current password" type="password" name="current-password" placeholder="••••••••"
         value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password" />
       {error   && <Feedback type="error"   message={error} />}
@@ -107,7 +107,7 @@ export default function AccountPage() {
   return (
     <div className="mx-auto max-w-3xl px-8 py-10">
       <div className="mb-2">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">Account</h1>
+        <h1 className="text-xl font-semibold text-foreground">Account</h1>
         <p className="mt-1 text-sm text-muted-foreground">Manage your login details.</p>
       </div>
 

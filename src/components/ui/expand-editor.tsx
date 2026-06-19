@@ -97,7 +97,7 @@ export function ExpandEditor({ label, description, value, onChange, placeholder,
                 name={dialogId}
                 aria-label={label}
                 spellCheck
-                className="w-full resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring/20"
+                className="w-full resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 overscroll-contain"
               />
               <p className="mt-2 text-right text-xs tabular-nums text-muted-foreground">
                 {draft.length.toLocaleString()} {draft.length === 1 ? 'character' : 'characters'}

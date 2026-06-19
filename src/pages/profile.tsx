@@ -19,7 +19,7 @@ interface SectionProps {
 function Section({ title, description, children }: SectionProps) {
   const ref = useReveal<HTMLElement>()
   return (
-    <section ref={ref} data-reveal className="flex gap-10 border-t border-border py-10">
+    <section ref={ref} data-reveal className="flex gap-10 border-t border-border py-12">
       <div className="w-44 shrink-0 pt-0.5">
         <h2 className="text-sm font-semibold text-foreground">{title}</h2>
         <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
@@ -44,7 +44,7 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto max-w-3xl px-8 py-10">
       <div className="mb-2">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">Profile</h1>
+        <h1 className="text-xl font-semibold text-foreground">Profile</h1>
         <p className="mt-1 text-sm text-muted-foreground">{user?.email}</p>
       </div>
 
