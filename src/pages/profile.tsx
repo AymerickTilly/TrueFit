@@ -16,12 +16,12 @@ interface SectionProps {
 
 function Section({ title, children }: SectionProps) {
   return (
-    <div className="rounded-2xl border border-border bg-card px-6 py-5">
+    <section className="rounded-2xl border border-border bg-card px-6 py-5">
       <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
         {title}
       </h2>
       {children}
-    </div>
+    </section>
   )
 }
 

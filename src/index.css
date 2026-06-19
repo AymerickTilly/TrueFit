@@ -75,8 +75,10 @@ body {
 }
 
 /* ─── Transitions — 150ms per framework guidelines ──────────────
-   Applied globally so all interactive elements feel snappy.
+   Guarded by prefers-reduced-motion so animations are opt-in.
 ──────────────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+@media (prefers-reduced-motion: no-preference) {
+  *, *::before, *::after {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }

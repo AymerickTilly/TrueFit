@@ -27,7 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled ?? loading}
         className={cn(
           // Base
-          'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors',
+          'inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium transition-colors',
           // Focus ring — uses Tailwind's built-in zinc scale so opacity modifiers work
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-50',

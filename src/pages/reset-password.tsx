@@ -67,6 +67,7 @@ export default function ResetPasswordPage() {
             <Input
               label="New password"
               type="password"
+              name="password"
               placeholder="••••••••"
               value={password}
               onChange={e => setPassword(e.target.value)}
@@ -78,6 +79,7 @@ export default function ResetPasswordPage() {
             <Input
               label="Confirm new password"
               type="password"
+              name="confirm-password"
               placeholder="••••••••"
               value={confirm}
               onChange={e => setConfirm(e.target.value)}

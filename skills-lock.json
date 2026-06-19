@@ -2,10 +2,10 @@
   "version": 1,
   "skills": {
     "web-design-guidelines": {
-      "source": "antfu/skills",
+      "source": "vercel-labs/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/web-design-guidelines/SKILL.md",
-      "computedHash": "57cefa41cea390d412000acc24e5526034027ca46d4f7581ba8fa05777a8687f"
+      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
     }
   }
 }

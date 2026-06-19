@@ -39,7 +39,7 @@ export function AppShell({ children }: AppShellProps) {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav aria-label="Main" className="flex-1 px-3 py-4 space-y-1">
           {navItems.map(({ to, label, icon }) => (
             <NavLink
               key={to}

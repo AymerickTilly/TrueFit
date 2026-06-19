@@ -24,7 +24,7 @@ function StepIndicator({ step }: { step: GenerateStep }) {
               className={[
                 'flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-semibold',
                 done ? 'bg-primary text-white' :
-                active ? 'bg-primary text-white animate-pulse' :
+                active ? 'bg-primary text-white motion-safe:animate-pulse' :
                 'bg-muted text-muted-foreground',
               ].join(' ')}
             >
@@ -122,7 +122,7 @@ export default function GeneratePage() {
         )}
 
         <div className="space-y-2">
-          <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <label htmlFor="job-select" className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Job application
           </label>
           {applications.length === 0 ? (
@@ -131,6 +131,8 @@ export default function GeneratePage() {
             </p>
           ) : (
             <select
+              id="job-select"
+              name="job-select"
               value={selectedId}
               onChange={e => { setSelectedId(e.target.value); setResult(null); setError(null) }}
               className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer"
