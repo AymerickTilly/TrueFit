@@ -12,21 +12,21 @@ interface ProjectFormProps {
 }
 
 export function ProjectForm({ initial, onSave, onCancel }: ProjectFormProps) {
-  const [title, setTitle]           = useState(initial?.title ?? '')
-  const [description, setDesc]      = useState(initial?.description ?? '')
-  const [stack, setStack]           = useState(initial?.stack.join(', ') ?? '')
-  const [skills, setSkills]         = useState(initial?.skills_demonstrated.join(', ') ?? '')
-  const [githubUrl, setGithubUrl]   = useState(initial?.github_url ?? '')
+  const [title, setTitle]         = useState(initial?.title ?? '')
+  const [description, setDesc]    = useState(initial?.description ?? '')
+  const [stack, setStack]         = useState(initial?.stack.join(', ') ?? '')
+  const [skills, setSkills]       = useState(initial?.skills_demonstrated.join(', ') ?? '')
+  const [githubUrl, setGithubUrl] = useState(initial?.github_url ?? '')
 
   function handleSave() {
     if (!title.trim() || !description.trim()) return
     onSave({
-      title:                title.trim(),
-      description:          description.trim(),
-      stack:                stack.split(',').map(s => s.trim()).filter(Boolean),
-      skills_demonstrated:  skills.split(',').map(s => s.trim()).filter(Boolean),
-      github_url:           githubUrl.trim(),
-      not_in_project:       initial?.not_in_project ?? [],
+      title:               title.trim(),
+      description:         description.trim(),
+      stack:               stack.split(',').map(s => s.trim()).filter(Boolean),
+      skills_demonstrated: skills.split(',').map(s => s.trim()).filter(Boolean),
+      github_url:          githubUrl.trim(),
+      not_in_project:      initial?.not_in_project ?? [],
     })
   }
 
@@ -36,27 +36,34 @@ export function ProjectForm({ initial, onSave, onCancel }: ProjectFormProps) {
         <p className="text-sm font-medium text-foreground">
           {initial ? 'Edit project' : 'Add project'}
         </p>
-        <button onClick={onCancel} className="text-muted-foreground hover:text-foreground">
-          <X size={14} />
+        <button
+          onClick={onCancel}
+          aria-label="Cancel"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+        >
+          <X size={14} aria-hidden="true" />
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input label="Project name" value={title} onChange={e => setTitle(e.target.value)} placeholder="TrueFit" required />
         <Input label="GitHub URL" value={githubUrl} onChange={e => setGithubUrl(e.target.value)} placeholder="https://github.com/you/project" />
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm font-medium text-foreground">Description</label>
+        <label htmlFor="proj-description" className="text-sm font-medium text-foreground">
+          Description
+        </label>
         <p className="text-xs text-muted-foreground">
-          What does it do and why did you build it? Write freely. The AI will shape this at generation time.
+          What does it do and why did you build it? Write freely — the AI will shape this at generation time.
         </p>
         <textarea
+          id="proj-description"
           value={description}
           onChange={e => setDesc(e.target.value)}
           rows={3}
           placeholder="e.g. An AI-powered CV generator that tailors your profile to job offers without fabricating experience. Built with React, Supabase, and the Gemini API."
-          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-colors duration-150 focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20"
         />
       </div>
 
@@ -68,9 +75,7 @@ export function ProjectForm({ initial, onSave, onCancel }: ProjectFormProps) {
 
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">Skills demonstrated</label>
-        <p className="text-xs text-muted-foreground">
-          What does this project prove you can do? Comma-separated.
-        </p>
+        <p className="text-xs text-muted-foreground">What does this project prove you can do? Comma-separated.</p>
         <Input value={skills} onChange={e => setSkills(e.target.value)} placeholder="Full-stack development, API design, auth, deployment" />
       </div>
 

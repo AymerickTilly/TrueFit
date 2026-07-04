@@ -17,9 +17,9 @@ interface SkillEntryFormProps {
 }
 
 export function SkillEntryForm({ skillName, onAdd, onCancel }: SkillEntryFormProps) {
-  const [context, setContext]     = useState<SkillContext>('professional')
-  const [description, setDesc]    = useState('')
-  const [saving, setSaving]       = useState(false)
+  const [context, setContext]  = useState<SkillContext>('professional')
+  const [description, setDesc] = useState('')
+  const [saving, setSaving]    = useState(false)
 
   async function handleAdd() {
     setSaving(true)
@@ -37,20 +37,26 @@ export function SkillEntryForm({ skillName, onAdd, onCancel }: SkillEntryFormPro
     <div className="rounded-md border border-border bg-muted/40 p-4 space-y-4">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-foreground">{skillName}</span>
-        <button onClick={onCancel} className="text-muted-foreground hover:text-foreground">
-          <X size={14} />
+        <button
+          onClick={onCancel}
+          aria-label="Cancel"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+        >
+          <X size={14} aria-hidden="true" />
         </button>
       </div>
 
-      <div className="space-y-1.5">
-        <p className="text-xs text-muted-foreground">How did you use this skill?</p>
-        <div className="flex flex-wrap gap-2">
+      <fieldset className="space-y-1.5 border-none p-0">
+        <legend className="text-xs text-muted-foreground">How did you use this skill?</legend>
+        <div className="flex flex-wrap gap-2 pt-1">
           {CONTEXTS.map(({ value, label }) => (
             <button
               key={value}
+              type="button"
               onClick={() => setContext(value)}
+              aria-pressed={context === value}
               className={[
-                'rounded-full px-3 py-1 text-xs font-medium transition-colors',
+                'rounded-full px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40',
                 context === value
                   ? 'bg-foreground text-background'
                   : 'border border-border text-muted-foreground hover:text-foreground',
@@ -60,18 +66,19 @@ export function SkillEntryForm({ skillName, onAdd, onCancel }: SkillEntryFormPro
             </button>
           ))}
         </div>
-      </div>
+      </fieldset>
 
       <div className="space-y-1.5">
-        <p className="text-xs text-muted-foreground">
+        <label htmlFor="skill-description" className="text-xs text-muted-foreground">
           Brief description: what did you build or do with it? (optional)
-        </p>
+        </label>
         <textarea
+          id="skill-description"
           value={description}
           onChange={e => setDesc(e.target.value)}
           rows={2}
           placeholder="e.g. Built REST APIs with FastAPI for a student project"
-          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-colors duration-150 focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20"
         />
       </div>
 

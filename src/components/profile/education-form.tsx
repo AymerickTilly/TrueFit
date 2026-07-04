@@ -12,12 +12,12 @@ interface EducationFormProps {
 }
 
 export function EducationForm({ initial, onSave, onCancel }: EducationFormProps) {
-  const [degree, setDegree]               = useState(initial?.degree ?? '')
-  const [institution, setInstitution]     = useState(initial?.institution ?? '')
-  const [specialisation, setSpec]         = useState(initial?.specialisation ?? '')
-  const [startDate, setStartDate]         = useState(initial?.start_date ?? '')
-  const [endDate, setEndDate]             = useState(initial?.end_date ?? '')
-  const [courses, setCourses]             = useState(initial?.courses.join(', ') ?? '')
+  const [degree, setDegree]           = useState(initial?.degree ?? '')
+  const [institution, setInstitution] = useState(initial?.institution ?? '')
+  const [specialisation, setSpec]     = useState(initial?.specialisation ?? '')
+  const [startDate, setStartDate]     = useState(initial?.start_date ?? '')
+  const [endDate, setEndDate]         = useState(initial?.end_date ?? '')
+  const [courses, setCourses]         = useState(initial?.courses.join(', ') ?? '')
 
   function handleSave() {
     if (!degree.trim() || !institution.trim() || !startDate.trim()) return
@@ -37,12 +37,16 @@ export function EducationForm({ initial, onSave, onCancel }: EducationFormProps)
         <p className="text-sm font-medium text-foreground">
           {initial ? 'Edit education' : 'Add education'}
         </p>
-        <button onClick={onCancel} className="text-muted-foreground hover:text-foreground">
-          <X size={14} />
+        <button
+          onClick={onCancel}
+          aria-label="Cancel"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+        >
+          <X size={14} aria-hidden="true" />
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input label="Degree / qualification" value={degree} onChange={e => setDegree(e.target.value)} placeholder="BSc Computer Science" required />
         <Input label="Institution" value={institution} onChange={e => setInstitution(e.target.value)} placeholder="University of Paris" required />
         <Input label="Specialisation" value={specialisation} onChange={e => setSpec(e.target.value)} placeholder="Artificial Intelligence" />
@@ -52,9 +56,16 @@ export function EducationForm({ initial, onSave, onCancel }: EducationFormProps)
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm font-medium text-foreground">Relevant courses</label>
+        <label htmlFor="edu-courses" className="text-sm font-medium text-foreground">
+          Relevant courses
+        </label>
         <p className="text-xs text-muted-foreground">Comma-separated. Only include courses worth highlighting for technical roles.</p>
-        <Input value={courses} onChange={e => setCourses(e.target.value)} placeholder="Algorithms, Databases, Machine Learning, Software Engineering" />
+        <Input
+          id="edu-courses"
+          value={courses}
+          onChange={e => setCourses(e.target.value)}
+          placeholder="Algorithms, Databases, Machine Learning, Software Engineering"
+        />
       </div>
 
       <div className="flex gap-2">

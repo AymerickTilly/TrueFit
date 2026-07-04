@@ -1,10 +1,12 @@
 <img src="https://raw.githubusercontent.com/AymerickTilly/TrueFit/main/src/assets/logo.svg" alt="TrueFit" height="60" />
 
-# TrueFit: AI-Powered CV and Cover Letter Generator
+# TrueFit
 
-**Tailored job applications in seconds, without lying.**
+**A clear picture of how your CV could look — without putting words in your mouth.**
 
-TrueFit takes your real skills, experience, and projects, and generates a tailored CV and cover letter for any job offer using Claude AI. It surfaces the most relevant parts of your background honestly. It never fabricates skills, inflates titles, or hallucinates experience.
+TrueFit helps you understand how your real experience maps to a job offer. You build a profile once, paste a job posting, and the AI surfaces which of your actual skills and experiences are most relevant — giving you an honest, structured view of what your CV could look like for that role.
+
+It is not a tool that writes your CV for you. It does not invent skills, inflate titles, or generate experience you do not have. What it produces is a foundation — a reflection of your real background shaped by the requirements of a specific job.
 
 > Built by a junior developer for junior developers, but designed for anyone.
 
@@ -12,19 +14,28 @@ TrueFit takes your real skills, experience, and projects, and generates a tailor
 
 ## Why this exists
 
-Most AI CV tools either rewrite your CV into generic corporate language or invent experience you do not have. TrueFit works differently. You define your real skills inventory once, and the AI selects and frames the most relevant parts for each specific job without adding anything that is not already there.
+Most AI CV tools either rewrite your CV into generic corporate language or invent experience you do not have. TrueFit works differently. You define your real skills inventory once, and the AI selects and frames the most relevant parts for each specific job — without adding anything that is not already there.
+
+The output is not a finished CV ready to submit. It is a starting point: structured, honest, and job-specific. You review it, refine it, and make it yours.
 
 ---
 
-## Features
+## What it does
 
-- **Skill inventory builder**: Define your skills with context tags (professional, academic, or learning), write usage descriptions, and get AI-suggested groupings.
-- **Job offer analysis**: Paste any job posting and receive a structured breakdown of requirements and skill gaps.
-- **CV generation**: Generate a tailored, honest CV based entirely on your real experience.
-- **Cover letter generation**: Generate either a full cover letter or a short text-box version.
-- **Applications log**: Track every job you have applied to, alongside the documents generated for each application.
-- **Multi-user support**: Anyone can create an account and build their own skill inventory.
-- **Field-agnostic**: Built for IT roles first, but designed to work for any profession.
+- **Skill inventory builder** — Add your skills with context (professional, academic, or still learning) and usage descriptions. These become the only pool the AI draws from.
+- **Job offer input** — Paste any job posting. TrueFit identifies which of your skills are relevant to that role.
+- **CV overview generation** — Receive a structured draft that selects and frames your real experience for the specific job. Think of it as a first pass, not a finished document.
+- **Applications log** — Track every role you have pasted in, with a status (draft, applied, interviewing, rejected, offered) and a link to regenerate or review the output at any time.
+- **Profile sections** — Work experience, education, projects, volunteering, and personal interests are all included in the profile and used to shape the output.
+
+---
+
+## What it does not do
+
+- It does not fabricate skills or experience.
+- It does not produce a submission-ready CV — you still need to review, adjust, and format the output to your standard.
+- It does not write cover letters (planned, not yet built).
+- It does not export to PDF (planned, not yet built).
 
 ---
 
@@ -33,9 +44,8 @@ Most AI CV tools either rewrite your CV into generic corporate language or inven
 | Layer | Technology |
 |---|---|
 | Frontend | React + TypeScript + Vite + TailwindCSS |
-| Database and Auth | Supabase (Postgres + Edge Functions) |
-| AI | Claude API (`claude-sonnet-4-20250514`) |
-| PDF export | react-pdf |
+| Database & Auth | Supabase (Postgres + Row Level Security + Edge Functions) |
+| AI | Groq API (free tier) via Supabase Edge Function |
 | Hosting | Vercel (frontend) + Supabase (backend) |
 
 ---
@@ -46,7 +56,7 @@ Most AI CV tools either rewrite your CV into generic corporate language or inven
 
 - Node.js 18+
 - A [Supabase](https://supabase.com) account (free tier works fine)
-- An [Anthropic](https://console.anthropic.com) API key
+- A [Groq](https://console.groq.com) API key (free tier)
 
 ### Installation
 
@@ -60,7 +70,7 @@ npm install
 
 # Copy environment template
 cp .env.example .env.local
-# Fill in your Supabase URL, anon key, and Anthropic API key
+# Fill in your Supabase URL, anon key, and Groq API key
 
 # Run database migrations
 npx supabase db push
@@ -74,7 +84,7 @@ npm run dev
 ```
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-ANTHROPIC_API_KEY=your_anthropic_api_key   # server-side only, lives in the Edge Function
+GROQ_API_KEY=your_groq_api_key   # server-side only, lives in the Edge Function — never in src/
 ```
 
 ---
@@ -83,65 +93,66 @@ ANTHROPIC_API_KEY=your_anthropic_api_key   # server-side only, lives in the Edge
 
 ```
 TrueFit/
-├── docs/                  # Architecture decisions, prompt system docs, roadmap
+├── docs/                  # Architecture decisions and roadmap
 ├── src/
-│   ├── components/        # React UI components
-│   │   ├── ui/            # Shared primitives (Button, Input, Card, etc.)
-│   │   ├── profile/       # Skill builder, experience forms
-│   │   ├── job/           # Job offer input and analysis
-│   │   ├── generation/    # CV and cover letter output
-│   │   └── layout/        # App shell, navigation, sidebar
-│   ├── pages/             # Route-level views
+│   ├── components/
+│   │   ├── ui/            # Shared primitives (Button, Input, Badge, Spinner, etc.)
+│   │   ├── profile/       # Skill builder, experience, education, project, volunteering forms
+│   │   ├── job/           # Job offer input, application card
+│   │   └── layout/        # App shell, topbar, protected route, page transitions
+│   ├── pages/             # Route-level views (Profile, Applications, Generate, Account, auth pages)
 │   ├── lib/
-│   │   ├── prompts/       # Prompt assembly logic (the core of the AI integration)
-│   │   ├── api/           # Supabase client
-│   │   └── utils/         # Shared helpers
-│   ├── hooks/             # Custom React hooks
+│   │   ├── prompts/       # Prompt assembly logic — the most sensitive part of the codebase
+│   │   ├── api/           # Supabase client and query helpers
+│   │   └── utils/         # Shared helpers (cn, etc.)
+│   ├── hooks/             # useAuth, useProfile, useReveal
 │   └── types/             # TypeScript interfaces and types
 ├── supabase/
-│   ├── migrations/        # SQL schema (versioned, never edit directly)
+│   ├── migrations/        # SQL schema (versioned — never edit directly, always create a new migration)
 │   └── functions/
-│       └── generate-documents/  # Edge Function that calls the Claude API server-side
+│       └── generate-documents/  # Edge Function — the only place the Groq API key is used
 └── public/
-    └── templates/         # CV layout templates
 ```
 
 ---
 
 ## How the AI integration works
 
-The core of TrueFit is a prompt assembly system in `src/lib/prompts/`. When you generate a CV:
+The core of TrueFit is a prompt assembly system in `src/lib/prompts/`. When you generate:
 
-1. Your full profile (skills, experience, projects) is loaded from Supabase.
-2. The job offer text is analysed to extract requirements and gaps.
-3. A structured prompt is assembled, combining your profile with the job analysis.
-4. The prompt is sent to Claude via a Supabase Edge Function, which keeps the API key server-side.
-5. Claude returns a tailored CV and cover letter, which are then parsed and displayed.
+1. Your full profile (skills, experience, projects, education) is loaded from Supabase.
+2. The job offer text is provided as context.
+3. A structured prompt is assembled, combining your profile with the job offer.
+4. The prompt is sent to the Groq API via a Supabase Edge Function — keeping the API key server-side at all times.
+5. The response is displayed as a structured overview of how your experience maps to the role.
 
-The AI operates under strict constraints. It can only use skills you have defined, cannot reassign a skill to a context it does not belong to, and cannot inflate your experience. See `docs/prompts.md` for the full prompt architecture.
+The AI operates under strict constraints: it can only select from skills you have defined, cannot reassign experience, and cannot inflate your background. See `docs/architecture.md` for the full prompt architecture.
 
 ---
 
 ## Roadmap
 
-See [`docs/roadmap.md`](docs/roadmap.md) for the full plan. Short version:
-
-- [x] Project scaffold and documentation
-- [ ] Profile builder UI
-- [ ] Supabase auth and database
-- [ ] Prompt assembly engine
-- [ ] Claude API integration
-- [ ] CV and cover letter generation
-- [ ] PDF export
-- [ ] Applications log
-- [ ] Non-IT field support
-- [ ] Public deployment
+| Status | Item |
+|---|---|
+| ✅ | Project scaffold, auth, database schema |
+| ✅ | App shell — topbar navigation, protected routes |
+| ✅ | Profile builder — skills, experience, education, projects, volunteering, interests |
+| ✅ | Applications log with status tracking |
+| ✅ | CV overview generation via Groq |
+| ✅ | Generate page — job selector, profile snapshot, output panel |
+| ⬜ | Cover letter generation |
+| ⬜ | PDF export |
+| ⬜ | Streaming responses (word-by-word output) |
+| ⬜ | Non-IT field support (marketing, finance, design, etc.) |
+| ⬜ | Multiple CV layout templates |
+| ⬜ | Demo mode — try without an account |
+| ⬜ | Public deployment |
 
 ---
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md). All contributions are welcome, especially non-IT field prompt templates.
+All contributions are welcome — especially non-IT field prompt templates and CV layout designs. See [`docs/architecture.md`](docs/architecture.md) for how the prompt system works before submitting changes to `src/lib/prompts/`.
 
 ---
 

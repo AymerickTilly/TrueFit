@@ -68,7 +68,7 @@ export function PersonalInfoForm({ profile, onSave }: PersonalInfoFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input label="Full name"  placeholder="Jane Smith"                       required {...field('full_name')} />
         <Input label="Email"      placeholder="jane@example.com"                 required type="email" {...field('email')} />
         <Input label="Phone"      placeholder="+64 21 000 0000"                  {...field('phone')} />

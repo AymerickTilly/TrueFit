@@ -33,12 +33,16 @@ export function VolunteeringForm({ initial, onSave, onCancel }: VolunteeringForm
         <p className="text-sm font-medium text-foreground">
           {initial ? 'Edit volunteering' : 'Add volunteering'}
         </p>
-        <button onClick={onCancel} className="text-muted-foreground hover:text-foreground">
-          <X size={14} />
+        <button
+          onClick={onCancel}
+          aria-label="Cancel"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+        >
+          <X size={14} aria-hidden="true" />
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input label="Role" value={role} onChange={e => setRole(e.target.value)} placeholder="Volunteer Tutor" required />
         <Input label="Organisation" value={organisation} onChange={e => setOrg(e.target.value)} placeholder="Code Club NZ" required />
         <Input label="Date / period" value={date} onChange={e => setDate(e.target.value)} placeholder="Jan 2024 to Mar 2024" />
@@ -46,13 +50,16 @@ export function VolunteeringForm({ initial, onSave, onCancel }: VolunteeringForm
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm font-medium text-foreground">Description</label>
+        <label htmlFor="vol-description" className="text-sm font-medium text-foreground">
+          Description
+        </label>
         <textarea
+          id="vol-description"
           rows={2}
           value={description}
           onChange={e => setDescription(e.target.value)}
           placeholder="Taught Python basics to secondary school students once a week."
-          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
+          className="w-full resize-none rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-colors duration-150 focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20"
         />
       </div>
 
