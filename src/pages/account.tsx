@@ -6,7 +6,7 @@ function Feedback({ type, message }: { type: 'success' | 'error'; message: strin
   return (
     <p
       role={type === 'error' ? 'alert' : 'status'}
-      className={type === 'error' ? 'text-sm text-red-600' : 'text-sm text-green-700'}
+      className={type === 'error' ? 'text-sm text-destructive' : 'text-sm text-success'}
     >
       {message}
     </p>
@@ -93,21 +93,23 @@ function PasswordForm() {
 
 function Section({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
-    <section className="flex gap-10 border-t border-border py-10">
-      <div className="w-44 shrink-0 pt-0.5">
-        <h2 className="text-sm font-semibold text-foreground">{title}</h2>
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
+    <section className="border-t border-border py-8 sm:py-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:gap-10">
+        <div className="sm:w-44 sm:shrink-0 sm:pt-0.5">
+          <h2 className="text-sm font-semibold text-foreground">{title}</h2>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
+        </div>
+        <div className="flex-1 min-w-0">{children}</div>
       </div>
-      <div className="flex-1 min-w-0">{children}</div>
     </section>
   )
 }
 
 export default function AccountPage() {
   return (
-    <div className="mx-auto max-w-3xl px-8 py-10">
+    <div className="mx-auto max-w-3xl px-4 py-6 sm:px-8 sm:py-10">
       <div className="mb-2">
-        <h1 className="text-xl font-semibold text-foreground">Account</h1>
+        <h1 className="font-display text-xl font-semibold text-foreground">Account</h1>
         <p className="mt-1 text-sm text-muted-foreground">Manage your login details.</p>
       </div>
 

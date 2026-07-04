@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
-import { Button } from '@/components/ui'
+import { Button, Input, Logo, Card } from '@/components/ui'
 
 export default function ResetPasswordPage() {
   const { updatePassword } = useAuth()
@@ -24,48 +24,38 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white px-6">
+    <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="w-full max-w-sm">
 
-        <p className="mb-10 text-xl select-none">
-          <span className="font-light text-foreground">True</span>
-          <span className="font-semibold text-foreground">Fit</span>
-        </p>
+        <Logo size="lg" className="mb-10" />
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">New password</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Choose something strong and memorable.</p>
-        </div>
+        <Card variant="accent" className="p-6 sm:p-8">
+          <div className="mb-8">
+            <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">New password</h1>
+            <p className="mt-1.5 text-sm text-muted-foreground">Choose something strong and memorable.</p>
+          </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {[
-            { label: 'New password', name: 'password', value: password, set: setPassword, hint: 'At least 8 characters.' },
-            { label: 'Confirm password', name: 'confirm-password', value: confirm, set: setConfirm },
-          ].map(({ label, name, value, set, hint }) => (
-            <div key={name} className="space-y-1.5 border-b border-border pb-3 focus-within:border-foreground transition-colors duration-150">
-              <label className="block text-xs font-medium text-muted-foreground">{label}</label>
-              <input
-                type="password"
-                name={name}
-                placeholder="••••••••"
-                value={value}
-                onChange={e => set(e.target.value)}
-                autoComplete="new-password"
-                required
-                className="block w-full bg-transparent text-base text-foreground placeholder:text-stone-300 focus:outline-none"
-              />
-              {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-            </div>
-          ))}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              label="New password" type="password" name="password" placeholder="At least 8 characters…"
+              value={password} onChange={e => setPassword(e.target.value)}
+              autoComplete="new-password" hint="At least 8 characters." required
+            />
+            <Input
+              label="Confirm password" type="password" name="confirm-password" placeholder="Repeat your password…"
+              value={confirm} onChange={e => setConfirm(e.target.value)}
+              autoComplete="new-password" required
+            />
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
 
-          <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full mt-2">
-            Update password
-          </Button>
-        </form>
+            <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full mt-1 justify-center">
+              Update password
+            </Button>
+          </form>
+        </Card>
 
-        <p className="mt-12 text-xs text-stone-300">© 2026 TrueFit</p>
+        <p className="mt-12 text-xs text-muted-foreground/60">© 2026 TrueFit</p>
       </div>
     </div>
   )

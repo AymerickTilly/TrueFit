@@ -3,6 +3,7 @@ export { ExpandEditor } from './expand-editor'
 export { Input } from './input'
 export { Spinner } from './spinner'
 export { Badge } from './badge'
+export { Logo } from './logo'
 export {
   Card,
   CardHeader,

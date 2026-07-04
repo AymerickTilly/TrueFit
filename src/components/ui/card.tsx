@@ -4,13 +4,16 @@ import { cn } from '@/lib/utils/cn'
 interface CardProps {
   className?: string
   children: ReactNode
+  variant?: 'flat' | 'accent'
 }
 
-export function Card({ className, children }: CardProps) {
+export function Card({ className, children, variant = 'flat' }: CardProps) {
   return (
     <div
       className={cn(
-        'rounded-lg border border-border bg-card text-card-foreground shadow-sm',
+        'rounded-xl bg-card text-card-foreground',
+        variant === 'flat' && 'border border-border shadow-sm',
+        variant === 'accent' && 'border-[1.5px] border-foreground shadow-hard',
         className
       )}
     >

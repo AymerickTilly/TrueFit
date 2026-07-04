@@ -14,7 +14,7 @@ TrueFit is an AI-powered CV and cover letter generator. Users build a skill inve
 
 - **Frontend**: React + TypeScript + Vite + TailwindCSS
 - **Database and Auth**: Supabase (Postgres + Row Level Security + Edge Functions)
-- **AI**: xAI Grok API via Supabase Edge Function (`grok-3`)
+- **AI**: Groq API (free tier) via Supabase Edge Function
 - **PDF export**: react-pdf
 - **Hosting**: Vercel (frontend) + Supabase (backend)
 
@@ -40,15 +40,15 @@ TrueFit is an AI-powered CV and cover letter generator. Users build a skill inve
 - `src/components/job/`: Job offer input and analysis display.
 - `src/components/generation/`: CV output, cover letter output, export controls.
 - `src/lib/prompts/`: Prompt assembly logic. This is the most sensitive part of the codebase.
-- `src/lib/api/`: Supabase client only. Never put the xAI API key here. It lives in the Edge Function.
-- `supabase/functions/generate-documents/`: The only place the xAI API key is used.
+- `src/lib/api/`: Supabase client only. Never put the Groq API key here. It lives in the Edge Function.
+- `supabase/functions/generate-documents/`: The only place the Groq API key is used.
 - `supabase/migrations/`: SQL files. Never edit these directly. Always create a new migration.
 
 ---
 
 ## Critical rules
 
-- **Never put the xAI API key in the frontend.** It must stay in the Supabase Edge Function.
+- **Never put the Groq API key in the frontend.** It must stay in the Supabase Edge Function.
 - **Never modify files in `supabase/migrations/` directly.** Create a new migration instead.
 - **The prompt system must never fabricate skills.** See `docs/prompts.md` for the constraints.
 - **Always run `npm run lint` before considering a task complete.**
@@ -74,7 +74,7 @@ See `supabase/migrations/` for the full schema with types and constraints.
 ```
 VITE_SUPABASE_URL          public, safe in frontend
 VITE_SUPABASE_ANON_KEY     public, safe in frontend
-XAI_API_KEY                secret, Edge Function only, never in src/
+GROQ_API_KEY               secret, Edge Function only, never in src/
 ```
 
 ---

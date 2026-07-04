@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
-import { Button } from '@/components/ui'
+import { Button, Input, Logo, Card } from '@/components/ui'
 
 export default function ForgotPasswordPage() {
   const { sendPasswordReset } = useAuth()
@@ -21,64 +21,61 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white px-6">
+    <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="w-full max-w-sm">
 
-        <p className="mb-10 text-xl select-none">
-          <span className="font-light text-foreground">True</span>
-          <span className="font-semibold text-foreground">Fit</span>
-        </p>
+        <Logo size="lg" className="mb-10" />
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">Reset password</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Enter your email and we'll send a reset link.
-          </p>
-        </div>
-
-        {sent ? (
-          <div className="space-y-4">
-            <p className="text-sm text-foreground">
-              A reset link has been sent to <strong>{email}</strong>. Check your inbox.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Didn't receive it?{' '}
-              <button onClick={() => setSent(false)} className="cursor-pointer text-foreground font-medium underline-offset-4 hover:underline">
-                Try again
-              </button>
+        <Card variant="accent" className="p-6 sm:p-8">
+          <div className="mb-8">
+            <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">Reset password</h1>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              Enter your email and we'll send a reset link.
             </p>
           </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-1.5 border-b border-border pb-3 focus-within:border-foreground transition-colors duration-150">
-              <label className="block text-xs font-medium text-muted-foreground">Email</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                autoComplete="email"
-                required
-                className="block w-full bg-transparent text-base text-foreground placeholder:text-stone-300 focus:outline-none"
-              />
+
+          {sent ? (
+            <div className="space-y-4" role="status" aria-live="polite">
+              <p className="text-sm text-foreground">
+                A reset link has been sent to <strong>{email}</strong>. Check your inbox.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Didn't receive it?{' '}
+                <button
+                  onClick={() => setSent(false)}
+                  className="cursor-pointer font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 rounded"
+                >
+                  Try again
+                </button>
+              </p>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                label="Email" type="email" name="email" placeholder="you@example.com…"
+                value={email} onChange={e => setEmail(e.target.value)}
+                autoComplete="email" inputMode="email" spellCheck={false} required
+              />
 
-            {error && <p className="text-sm text-red-600">{error}</p>}
+              {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
 
-            <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full mt-2">
-              Send reset link
-            </Button>
-          </form>
-        )}
+              <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full mt-1 justify-center">
+                Send reset link
+              </Button>
+            </form>
+          )}
+        </Card>
 
         <p className="mt-8 text-sm text-muted-foreground">
-          <Link to="/login" className="text-foreground font-medium underline-offset-4 hover:underline">
+          <Link
+            to="/login"
+            className="font-medium text-foreground underline-offset-4 hover:underline"
+          >
             Back to sign in
           </Link>
         </p>
 
-        <p className="mt-12 text-xs text-stone-300">© 2026 TrueFit</p>
+        <p className="mt-12 text-xs text-muted-foreground/60">© 2026 TrueFit</p>
       </div>
     </div>
   )

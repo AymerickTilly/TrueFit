@@ -1,32 +1,13 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
-import { Button } from '@/components/ui'
+import { Button, Input, Logo, Card } from '@/components/ui'
 
-function Field({
-  label, type, name, placeholder, value, onChange, autoComplete, hint,
-}: {
-  label: string; type: string; name: string; placeholder: string
-  value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  autoComplete?: string; hint?: string
-}) {
-  return (
-    <div className="space-y-1.5 border-b border-border pb-3 focus-within:border-foreground transition-colors duration-150">
-      <label className="block text-xs font-medium text-muted-foreground">{label}</label>
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        autoComplete={autoComplete}
-        required
-        className="block w-full bg-transparent text-base text-foreground placeholder:text-stone-300 focus:outline-none"
-      />
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  )
-}
+const TRUST_POINTS = [
+  'No invented skills — only what you have listed',
+  'Tailored to the exact job posting',
+  'Ready to submit, every time',
+]
 
 export default function SignupPage() {
   const { signUp } = useAuth()
@@ -49,43 +30,88 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white px-6">
-      <div className="w-full max-w-sm">
+    <div className="flex min-h-screen bg-background">
 
-        <p className="mb-10 text-xl select-none">
-          <span className="font-light text-foreground">True</span>
-          <span className="font-semibold text-foreground">Fit</span>
-        </p>
+      {/* ── Brand panel ── */}
+      <div className="hidden lg:flex lg:w-[400px] xl:w-[460px] shrink-0 flex-col bg-foreground px-12 py-12 bg-dot-grid">
+        <Logo size="md" wordmarkClassName="text-background" markClassName="ring-2 ring-background/20 rounded-[9px]" />
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">Create an account</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Build your profile once. Generate tailored CVs forever.</p>
+        <div className="flex flex-1 flex-col justify-center gap-10">
+          <div>
+            <h2 className="font-display text-[2rem] font-semibold leading-tight tracking-tight text-background">
+              Get started<br />in minutes.
+            </h2>
+            <p className="mt-3 max-w-[28ch] text-sm leading-relaxed text-background/70">
+              Set up your profile once and generate a tailored CV every time you apply — grounded in what you've actually done.
+            </p>
+          </div>
+
+          <ul className="space-y-3.5" aria-label="Product highlights">
+            {TRUST_POINTS.map(point => (
+              <li key={point} className="flex items-center gap-3">
+                <span
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20"
+                  aria-hidden="true"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                </span>
+                <span className="text-sm text-background/80">{point}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <Field label="Email" type="email" name="email" placeholder="you@example.com"
-            value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" />
-          <Field label="Password" type="password" name="password" placeholder="••••••••"
-            value={password} onChange={e => setPassword(e.target.value)} autoComplete="new-password" hint="At least 6 characters." />
-          <Field label="Confirm password" type="password" name="confirm-password" placeholder="••••••••"
-            value={confirm} onChange={e => setConfirm(e.target.value)} autoComplete="new-password" />
-
-          {error && <p className="text-sm text-red-600">{error}</p>}
-
-          <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full mt-2">
-            Create account
-          </Button>
-        </form>
-
-        <p className="mt-8 text-sm text-muted-foreground">
-          Already have an account?{' '}
-          <Link to="/login" className="text-foreground font-medium underline-offset-4 hover:underline">
-            Sign in
-          </Link>
-        </p>
-
-        <p className="mt-12 text-xs text-stone-300">© 2026 TrueFit</p>
+        <p className="text-xs text-background/40">© 2026 TrueFit</p>
       </div>
+
+      {/* ── Form panel ── */}
+      <div className="flex flex-1 items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm">
+
+          <Logo size="lg" className="mb-10 lg:hidden" />
+
+          <Card variant="accent" className="p-6 sm:p-8">
+            <div className="mb-8">
+              <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">Create an account</h1>
+              <p className="mt-1.5 text-sm text-muted-foreground">Build your profile once. Generate tailored CVs forever.</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                label="Email" type="email" name="email" placeholder="you@example.com…"
+                value={email} onChange={e => setEmail(e.target.value)}
+                autoComplete="email" inputMode="email" spellCheck={false} required
+              />
+              <Input
+                label="Password" type="password" name="password" placeholder="At least 6 characters…"
+                value={password} onChange={e => setPassword(e.target.value)}
+                autoComplete="new-password" hint="At least 6 characters." required
+              />
+              <Input
+                label="Confirm password" type="password" name="confirm-password" placeholder="Repeat your password…"
+                value={confirm} onChange={e => setConfirm(e.target.value)}
+                autoComplete="new-password" required
+              />
+
+              {error && (
+                <p className="text-sm text-destructive" role="alert">{error}</p>
+              )}
+
+              <Button type="submit" variant="primary" size="lg" loading={loading} className="w-full mt-1 justify-center">
+                Create account
+              </Button>
+            </form>
+          </Card>
+
+          <p className="mt-8 text-sm text-muted-foreground">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-foreground underline-offset-4 hover:underline">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
+
     </div>
   )
 }

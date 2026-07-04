@@ -1,70 +1,90 @@
 @import "tailwindcss";
 
 /* ─── Design tokens ─────────────────────────────────────────────
-   Stone-neutral canvas — no blue tinting on backgrounds.
-   Blue is reserved for primary actions only.
+   Warm & cosy canvas — cream base, ink foreground, terracotta
+   primary, mustard accent, sage success, brick destructive.
 ──────────────────────────────────────────────────────────────── */
 :root {
-  --bg:            #f5f5f4;   /* stone-100 — barely-there off-white  */
-  --fg:            #1c1917;   /* stone-900 — warm near-black          */
-  --card:          #ffffff;
-  --card-fg:       #1c1917;
-  --border:        #e7e5e4;   /* stone-200                            */
-  --input:         #d6d3d1;   /* stone-300                            */
-  --primary:       #2563eb;   /* blue-600                             */
-  --primary-fg:    #ffffff;
-  --secondary:     #f5f5f4;
-  --secondary-fg:  #1c1917;
-  --muted:         #f5f5f4;
-  --muted-fg:      #78716c;   /* stone-500                            */
-  --ring:          #2563eb;
-  --success:       #16a34a;
-  --success-bg:    #dcfce7;
-  /* sidebar */
-  --sidebar:       #0f172a;   /* slate-900 — dark charcoal            */
-  --sidebar-fg:    #f8fafc;   /* slate-50                             */
-  --sidebar-muted: #94a3b8;   /* slate-400                            */
-  --sidebar-hover: rgba(255,255,255,0.06);
-  --sidebar-active:rgba(255,255,255,0.10);
+  --bg:               #faf6ee;   /* warm cream                          */
+  --fg:               #2a2118;   /* warm ink — not pure black           */
+  --card:             #fffdf8;   /* warm off-white, lifted off bg       */
+  --card-fg:          #2a2118;
+  --border:           #e4d9c4;   /* warm tan-grey                       */
+  --input:            #d8c9ab;
+  --primary:          #c1502e;   /* terracotta / burnt-orange           */
+  --primary-fg:       #fffaf3;
+  --primary-hover:    #a8431f;
+  --secondary:        #f0e6d2;   /* mustard-tinted cream chip           */
+  --secondary-fg:     #2a2118;
+  --muted:            #f2ead9;
+  --muted-fg:         #7a6b52;   /* warm muted brown                    */
+  --ring:             #c1502e;
+  --success:          #4b7a51;   /* warm sage                           */
+  --success-bg:       #e2ecdf;
+  --destructive:      #a8402f;   /* brick red                           */
+  --destructive-fg:   #fff8f3;
+  --destructive-hover:#8f3626;
+  --accent:           #c8952b;   /* mustard / gold                      */
+  --accent-fg:        #2a2118;
+  --ink-shadow:       #2a2118;   /* hard-shadow color                   */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg:            #0f0f0e;
-    --fg:            #f5f5f4;
-    --card:          #1c1917;
-    --card-fg:       #f5f5f4;
-    --border:        #292524;   /* stone-800 */
-    --input:         #3d3835;
-    --primary:       #3b82f6;
-    --primary-fg:    #ffffff;
-    --secondary:     #1c1917;
-    --secondary-fg:  #e7e5e4;
-    --muted:         #1c1917;
-    --muted-fg:      #a8a29e;   /* stone-400 */
-    --ring:          #3b82f6;
-    --success:       #4ade80;
-    --success-bg:    #14532d;
+    --bg:               #1c1712;   /* warm espresso-black                */
+    --fg:               #f3ead9;   /* warm cream text                    */
+    --card:             #251e17;
+    --card-fg:          #f3ead9;
+    --border:           #3a2f24;
+    --input:            #4a3c2c;
+    --primary:          #e0703f;   /* brighter terracotta for dark bg    */
+    --primary-fg:       #201108;
+    --primary-hover:    #ee8455;
+    --secondary:        #322a20;
+    --secondary-fg:     #f3ead9;
+    --muted:            #2a231b;
+    --muted-fg:         #b8a888;
+    --ring:             #e0703f;
+    --success:          #7fae7a;
+    --success-bg:       #253426;
+    --destructive:      #e0685a;
+    --destructive-fg:   #241009;
+    --destructive-hover:#ee8071;
+    --accent:           #d9a53f;
+    --accent-fg:        #1c1712;
+    --ink-shadow:       #100c08;
   }
 }
 
 @theme inline {
-  --color-background:           var(--bg);
-  --color-foreground:           var(--fg);
-  --color-card:                 var(--card);
-  --color-card-foreground:      var(--card-fg);
-  --color-border:               var(--border);
-  --color-input:                var(--input);
-  --color-primary:              var(--primary);
-  --color-primary-foreground:   var(--primary-fg);
-  --color-secondary:            var(--secondary);
-  --color-secondary-foreground: var(--secondary-fg);
-  --color-muted:                var(--muted);
-  --color-muted-foreground:     var(--muted-fg);
-  --color-ring:                 var(--ring);
+  --color-background:            var(--bg);
+  --color-foreground:            var(--fg);
+  --color-card:                  var(--card);
+  --color-card-foreground:       var(--card-fg);
+  --color-border:                var(--border);
+  --color-input:                 var(--input);
+  --color-primary:               var(--primary);
+  --color-primary-foreground:    var(--primary-fg);
+  --color-secondary:             var(--secondary);
+  --color-secondary-foreground:  var(--secondary-fg);
+  --color-muted:                 var(--muted);
+  --color-muted-foreground:      var(--muted-fg);
+  --color-ring:                  var(--ring);
+  --color-success:               var(--success);
+  --color-success-bg:            var(--success-bg);
+  --color-destructive:           var(--destructive);
+  --color-destructive-foreground: var(--destructive-fg);
+  --color-accent:                var(--accent);
+  --color-accent-foreground:     var(--accent-fg);
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans:    'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */
+html {
+  color-scheme: light dark;
+}
+
 button, a, [role="button"] {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -73,13 +93,36 @@ button, a, [role="button"] {
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3 {
   text-wrap: balance;
+}
+
+/* ─── Hard shadow (brutalism-lite accent) ───────────────────────
+   Used selectively: primary buttons, and Card variant="accent".
+   Not applied to dense form fields/inputs/list rows.
+──────────────────────────────────────────────────────────────── */
+.shadow-hard {
+  box-shadow: 3px 3px 0 0 var(--ink-shadow);
+}
+.shadow-hard-sm {
+  box-shadow: 2px 2px 0 0 var(--ink-shadow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shadow-hard-active:active {
+    box-shadow: 1px 1px 0 0 var(--ink-shadow);
+    transform: translate(2px, 2px);
+  }
+}
+
+/* ─── Dot-grid texture (auth side-panels, empty states only) ─── */
+.bg-dot-grid {
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
 
 /* ─── Transitions ─────────────────────────────────────────────── */
@@ -105,7 +148,7 @@ dialog {
   margin: auto;
 }
 dialog::backdrop {
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, 0.4);
 }
 @media (prefers-reduced-motion: no-preference) {
   dialog[open] {
